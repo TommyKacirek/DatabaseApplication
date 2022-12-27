@@ -1,13 +1,11 @@
 package org.but.feec.library.controllers;
 
 import org.but.feec.library.App;
-import org.but.feec.library.data.PersonRepository;
+import org.but.feec.library.data.LibraryRepository;
 import org.but.feec.library.exceptions.DataAccessException;
 import org.but.feec.library.exceptions.ExceptionHandler;
 import org.but.feec.library.exceptions.ResourceNotFoundException;
 import org.but.feec.library.services.AuthService;
-import de.jensd.fx.glyphs.GlyphsDude;
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
@@ -16,7 +14,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -53,7 +50,7 @@ public class LoginController {
 
 
 
-        private PersonRepository personRepository;
+        private LibraryRepository libraryRepository;
         private AuthService authService;
         private ValidationSupport validation;
 
@@ -62,10 +59,6 @@ public class LoginController {
 
         @FXML
         private void initialize() {
-            /**GlyphsDude.setIcon(LogButton, FontAwesomeIcon.SIGN_IN, "1em");
-            GlyphsDude.setIcon(LabelUsername, FontAwesomeIcon.USER, "2em");
-            GlyphsDude.setIcon(LabelPassword, FontAwesomeIcon.USER_SECRET, "2em");
-             */
             EnterUsername.setOnKeyPressed(event -> {
                 if (event.getCode() == KeyCode.ENTER) {
                     handleSignIn();
@@ -92,8 +85,8 @@ public class LoginController {
         }
 
         private void initializeServices() {
-            personRepository = new PersonRepository();
-            authService = new AuthService(personRepository);
+            libraryRepository = new LibraryRepository();
+            authService = new AuthService(libraryRepository);
         }
 
 
@@ -111,18 +104,18 @@ public class LoginController {
                 if (authenticated) {
                     showPersonsView();
                 } else {
-                    showInvalidPaswordDialog();
+                    showInvalidPasswordDialog();
                 }
             } catch (ResourceNotFoundException | DataAccessException e) {
-                showInvalidPaswordDialog();
+                showInvalidPasswordDialog();
             }
         }
 
         private void showPersonsView() {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader();
-                fxmlLoader.setLocation(App.class.getResource("fxml/add-books.fxml"));
-                Scene scene = new Scene(fxmlLoader.load(), 1050, 600);
+                fxmlLoader.setLocation(App.class.getResource("fxml/LibraryPage.fxml"));
+                Scene scene = new Scene(fxmlLoader.load(), 1000, 500);
                 Stage stage = new Stage();
                 stage.setTitle("Samurai Duck Library");
                 stage.setScene(scene);
@@ -139,11 +132,11 @@ public class LoginController {
             }
         }
 
-        private void showInvalidPaswordDialog() {
+        private void showInvalidPasswordDialog() {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Unauthenticated");
             alert.setHeaderText("The user is not authenticated");
-            alert.setContentText("Please provide a valid username and password");//ww  w . j  a  va2s  .  co  m
+            alert.setContentText("Please provide a valid username and password");
 
             alert.showAndWait();
         }
@@ -177,6 +170,6 @@ public class LoginController {
         public void handleOnEnterActionPassword(ActionEvent dragEvent) {
             handleSignIn();
         }
-    }
+}
 
 

@@ -21,7 +21,7 @@ public class App extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/hello-view.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/Login.fxml"));
             BorderPane mainStage = loader.load();
 
             primaryStage.setTitle("Samurai Duck Library");

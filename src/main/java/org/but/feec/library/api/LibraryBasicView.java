@@ -5,7 +5,7 @@ import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class PersonBasicView {
+public class LibraryBasicView {
     private LongProperty id = new SimpleLongProperty();
     private StringProperty city = new SimpleStringProperty();
     private StringProperty email = new SimpleStringProperty();

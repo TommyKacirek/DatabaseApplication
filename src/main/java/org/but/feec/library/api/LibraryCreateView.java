@@ -2,7 +2,7 @@ package org.but.feec.library.api;
 
 import java.util.Arrays;
 
-public class PersonCreateView {
+public class LibraryCreateView {
 
     private String email;
     private String givenName;

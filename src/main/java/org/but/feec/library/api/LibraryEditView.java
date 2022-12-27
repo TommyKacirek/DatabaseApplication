@@ -1,6 +1,6 @@
 package org.but.feec.library.api;
 
-public class PersonEditView {
+public class LibraryEditView {
 
     private Long id;
     private String email;

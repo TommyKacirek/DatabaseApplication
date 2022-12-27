@@ -1,10 +1,12 @@
 package org.but.feec.library.controllers;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TextField;
 
-public class AddController {
+public class LibraryPageController {
     @FXML
     public TableColumn AuthorColumn;
 
@@ -18,7 +20,7 @@ public class AddController {
     public TableColumn GenreColumn;
 
     @FXML
-    public TableColumn Borrow_typeColumn;
+    public TableColumn BorrowTypeColumn;
 
     @FXML
     public TableColumn LocationColumn;
@@ -27,7 +29,21 @@ public class AddController {
     public TableColumn LanguageColumn;
 
     @FXML
-    public Label LabelAdd;
+    public TextField EnterBookTextField;
+
+    @FXML
+    private Button SearchButton;
+
+    @FXML
+    private Button RefreshButton;
+
+    @FXML
+    private Button AddBookButton;
+
+    @FXML
+    private Button TrySQLInjectionButton;
+
+
 
     public void initialize() {
 

@@ -8,6 +8,7 @@ module org.but.feec.library {
     requires com.zaxxer.hikari;
     requires org.controlsfx.controls;
     requires fontawesomefx;
+    requires bcrypt;
 
 
     opens org.but.feec.library to javafx.fxml;

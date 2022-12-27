@@ -5,7 +5,7 @@ import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class PersonDetailView {
+public class LibraryDetailView {
     private LongProperty id = new SimpleLongProperty();
     private StringProperty email = new SimpleStringProperty();
     private StringProperty givenName = new SimpleStringProperty();

@@ -1,20 +1,20 @@
 package org.but.feec.library.services;
 
 
-import org.but.feec.library.api.PersonAuthView;
-import org.but.feec.library.data.PersonRepository;
+import org.but.feec.library.api.LibraryAuthView;
+import org.but.feec.library.data.LibraryRepository;
 import org.but.feec.library.exceptions.ResourceNotFoundException;
 
 public class AuthService {
 
-    private PersonRepository personRepository;
+    private LibraryRepository libraryRepository;
 
-    public AuthService(PersonRepository personRepository) {
-        this.personRepository = personRepository;
+    public AuthService(LibraryRepository personRepository) {
+        this.libraryRepository = personRepository;
     }
 
-    private PersonAuthView findPersonByEmail(String email) {
-        return personRepository.findPersonByEmail(email);
+    private LibraryAuthView findPersonByEmail(String email) {
+        return libraryRepository.findPersonByEmail(email);
     }
 
     public boolean authenticate(String username, String password) {
@@ -22,11 +22,12 @@ public class AuthService {
             return false;
         }
 
-        PersonAuthView personAuthView = findPersonByEmail(username);
-        if (personAuthView == null) {
+        LibraryAuthView libraryAuthView = findPersonByEmail(username);
+        if (libraryAuthView == null) {
             throw new ResourceNotFoundException("Provided username is not found.");
         }
 
+        libraryAuthView.getPassword();
         return true;
     }
 
