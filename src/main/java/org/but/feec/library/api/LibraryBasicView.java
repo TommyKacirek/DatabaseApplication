@@ -6,83 +6,97 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class LibraryBasicView {
-    private LongProperty id = new SimpleLongProperty();
-    private StringProperty city = new SimpleStringProperty();
-    private StringProperty email = new SimpleStringProperty();
-    private StringProperty givenName = new SimpleStringProperty();
-    private StringProperty familyName = new SimpleStringProperty();
-    private StringProperty nickname = new SimpleStringProperty();
+    private StringProperty author = new SimpleStringProperty();
+    private StringProperty title = new SimpleStringProperty();
+    private StringProperty copy = new SimpleStringProperty();
+    private StringProperty genre = new SimpleStringProperty();
+    private StringProperty borrow_type = new SimpleStringProperty();
+    private StringProperty location = new SimpleStringProperty();
+    private StringProperty language = new SimpleStringProperty();
 
-    public Long getId() {
-        return idProperty().get();
+    public String getAuthor() {
+        return author.get();
     }
 
-    public void setId(Long id) {
-        this.idProperty().setValue(id);
+    public void setAuthor(String author) {
+        this.author.set(author);
     }
 
-    public String getCity() {
-        return cityProperty().get();
+    public String getTitle() {
+        return titleProperty().get();
     }
 
-    public void setCity(String city) {
-        this.cityProperty().setValue(city);
+    public void setTitle(String title) {
+        this.titleProperty().setValue(title);
     }
 
-    public String getEmail() {
-        return emailProperty().get();
+    public String getCopy() {
+        return copyProperty().get();
     }
 
-    public void setEmail(String email) {
-        this.emailProperty().setValue(email);
+    public void setCopy(String copy) {
+        this.copyProperty().setValue(copy);
     }
 
-    public String getGivenName() {
-        return givenNameProperty().get();
+    public String getGenre() {
+        return genreProperty().get();
     }
 
-    public void setGivenName(String givenName) {
-        this.givenNameProperty().setValue(givenName);
+    public void setGenre(String genre) {
+        this.genreProperty().setValue(genre);
     }
 
-    public String getFamilyName() {
-        return familyNameProperty().get();
+    public String getBorrow_type() {
+        return borrow_typeProperty().get();
     }
 
-    public void setFamilyName(String familyName) {
-        this.familyNameProperty().setValue(familyName);
+    public void setBorrow_type(String borrow_type) {
+        this.borrow_typeProperty().setValue(borrow_type);
     }
 
-    public String getNickname() {
-        return nicknameProperty().get();
+    public String getLocation() {
+        return locationProperty().get();
     }
 
-    public void setNickname(String nickname) {
-        this.nicknameProperty().set(nickname);
+    public void setLocation(String location) {
+        this.locationProperty().set(location);
     }
 
-    public LongProperty idProperty() {
-        return id;
+    public String getLanguage() {
+        return language.get();
     }
 
-    public StringProperty cityProperty() {
-        return city;
+    public void setLanguage(String language) {
+        this.language.set(language);
     }
 
-    public StringProperty emailProperty() {
-        return email;
+    public StringProperty languageProperty() {
+        return language;
     }
 
-    public StringProperty givenNameProperty() {
-        return givenName;
+    public StringProperty authorProperty() {
+        return author;
     }
 
-    public StringProperty familyNameProperty() {
-        return familyName;
+    public StringProperty titleProperty() {
+        return title;
     }
 
-    public StringProperty nicknameProperty() {
-        return nickname;
+    public StringProperty copyProperty() {
+        return copy;
     }
+
+    public StringProperty genreProperty() {
+        return genre;
+    }
+
+    public StringProperty borrow_typeProperty() {
+        return borrow_type;
+    }
+
+    public StringProperty locationProperty() {
+        return location;
+    }
+
 
 }

@@ -14,7 +14,7 @@
     <center>
         <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #080b0f;" BorderPane.alignment="CENTER">
             <children>
-                <TableView layoutY="50.0" prefHeight="411.0" prefWidth="900.0">
+                <TableView fx:id="LibraryTabelView" layoutY="50.0" prefHeight="411.0" prefWidth="900.0">
                     <columns>
                         <TableColumn fx:id="AuthorColumn" prefWidth="123.0" text="Author" />
                         <TableColumn fx:id="TitleColumn"  prefWidth="107.33334350585938" text="Title" />

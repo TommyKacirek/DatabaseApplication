@@ -55,6 +55,7 @@ public class LoginController {
         private ValidationSupport validation;
 
     public LoginController() {
+
         }
 
         @FXML
@@ -95,27 +96,28 @@ public class LoginController {
             handleSignIn();
         }
 
-        private void handleSignIn() {
-            String username = EnterUsername.getText();
-            String password = EnterPassword.getText();
-
-            try {
-                boolean authenticated = authService.authenticate(username, password);
-                if (authenticated) {
-                    showPersonsView();
-                } else {
-                    showInvalidPasswordDialog();
-                }
-            } catch (ResourceNotFoundException | DataAccessException e) {
+    private void handleSignIn() {
+        String username = EnterUsername.getText();
+        String password = EnterPassword.getText();
+        try {
+            //boolean authenticated = authService.authenticate(username, password);
+            boolean authenticated = true;
+            if (authenticated) {
+                authConfirmDialog();
+                showPersonsView();
+            } else {
                 showInvalidPasswordDialog();
             }
+        } catch (ResourceNotFoundException | DataAccessException e) {
+            showInvalidPasswordDialog();
         }
+    }
 
         private void showPersonsView() {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader();
                 fxmlLoader.setLocation(App.class.getResource("fxml/LibraryPage.fxml"));
-                Scene scene = new Scene(fxmlLoader.load(), 1000, 500);
+                Scene scene = new Scene(fxmlLoader.load(), 900, 600);
                 Stage stage = new Stage();
                 stage.setTitle("Samurai Duck Library");
                 stage.setScene(scene);
@@ -124,7 +126,6 @@ public class LoginController {
                 stageOld.close();
 
 
-                authConfirmDialog();
 
                 stage.show();
             } catch (IOException ex) {
@@ -142,30 +143,30 @@ public class LoginController {
         }
 
 
-        private void authConfirmDialog() {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Logging confirmation");
-            alert.setHeaderText("You were successfully logged in.");
+    private void authConfirmDialog() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Logging confirmation");
+        alert.setHeaderText("You were successfully logged in.");
 
-            Timeline idlestage = new Timeline(new KeyFrame(Duration.seconds(3), new EventHandler<ActionEvent>() {
+        Timeline idlestage = new Timeline(new KeyFrame(Duration.seconds(3), new EventHandler<ActionEvent>() {
 
-                @Override
-                public void handle(ActionEvent event) {
-                    alert.setResult(ButtonType.CANCEL);
-                    alert.hide();
-                }
-            }));
-            idlestage.setCycleCount(1);
-            idlestage.play();
-
-            Optional<ButtonType> result = alert.showAndWait();
-
-            if (result.get() == ButtonType.OK) {
-                System.out.println("ok clicked");
-            } else if (result.get() == ButtonType.CANCEL) {
-                System.out.println("cancel clicked");
+            @Override
+            public void handle(ActionEvent event) {
+                alert.setResult(ButtonType.CANCEL);
+                alert.hide();
             }
+        }));
+        idlestage.setCycleCount(1);
+        idlestage.play();
+
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if (result.get() == ButtonType.OK) {
+            System.out.println("ok clicked");
+        } else if (result.get() == ButtonType.CANCEL) {
+            System.out.println("cancel clicked");
         }
+    }
 
         public void handleOnEnterActionPassword(ActionEvent dragEvent) {
             handleSignIn();

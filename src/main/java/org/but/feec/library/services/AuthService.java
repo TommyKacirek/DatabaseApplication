@@ -1,6 +1,7 @@
 package org.but.feec.library.services;
 
 
+import at.favre.lib.crypto.bcrypt.BCrypt;
 import org.but.feec.library.api.LibraryAuthView;
 import org.but.feec.library.data.LibraryRepository;
 import org.but.feec.library.exceptions.ResourceNotFoundException;
@@ -27,8 +28,8 @@ public class AuthService {
             throw new ResourceNotFoundException("Provided username is not found.");
         }
 
-        libraryAuthView.getPassword();
-        return true;
+        BCrypt.Result result = BCrypt.verifyer().verify(password.toCharArray(), libraryAuthView.getPassword());
+        return result.verified;
     }
 
 

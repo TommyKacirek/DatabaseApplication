@@ -1,5 +1,6 @@
 package org.but.feec.library.data;
 
+import javafx.scene.control.cell.PropertyValueFactory;
 import org.but.feec.library.api.*;
 import org.but.feec.library.config.DataSourceConfig;
 import org.but.feec.library.exceptions.DataAccessException;
@@ -59,19 +60,20 @@ public class LibraryRepository {
     private LibraryAuthView mapToPersonAuth(ResultSet rs) throws SQLException {
         LibraryAuthView person = new LibraryAuthView();
         person.setEmail(rs.getString("email"));
-        person.setPassword(rs.getString("pwd"));
+        person.setPassword(rs.getString("password"));
         return person;
     }
 
     private LibraryBasicView mapToPersonBasicView(ResultSet rs) throws SQLException {
-        LibraryBasicView personBasicView = new LibraryBasicView();
-        personBasicView.setId(rs.getLong("id_person"));
-        personBasicView.setEmail(rs.getString("email"));
-        personBasicView.setGivenName(rs.getString("given_name"));
-        personBasicView.setFamilyName(rs.getString("family_name"));
-        personBasicView.setNickname(rs.getString("nickname"));
-        personBasicView.setCity(rs.getString("city"));
-        return personBasicView;
+        LibraryBasicView libraryBasicViewBasicView = new LibraryBasicView();
+        libraryBasicViewBasicView.setAuthor(rs.getString("author"));
+        libraryBasicViewBasicView.setCopy(rs.getString("title"));
+        libraryBasicViewBasicView.setGenre(rs.getString("copy"));
+        libraryBasicViewBasicView.setBorrow_type(rs.getString("genre"));
+        libraryBasicViewBasicView.setLocation(rs.getString("borrow_type"));
+        libraryBasicViewBasicView.setTitle(rs.getString("location"));
+        libraryBasicViewBasicView.setTitle(rs.getString("language"));
+        return libraryBasicViewBasicView;
     }
 
 

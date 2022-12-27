@@ -6,18 +6,16 @@ import org.but.feec.library.api.LibraryCreateView;
 import org.but.feec.library.api.LibraryDetailView;
 import org.but.feec.library.api.LibraryEditView;
 import org.but.feec.library.data.LibraryRepository;
-
+import at.favre.lib.crypto.bcrypt.BCrypt;
 import java.util.List;
 
-/**
- * Class representing business logic on top of the Persons
- */
+
 public class LibraryService {
 
     private LibraryRepository libraryRepository;
 
-    public LibraryService(LibraryRepository personRepository) {
-        this.libraryRepository = personRepository;
+    public LibraryService(LibraryRepository libraryRepository) {
+        this.libraryRepository = libraryRepository;
     }
 
     public LibraryDetailView getPersonDetailView(Long id) {
@@ -49,9 +47,11 @@ public class LibraryService {
      * @param password to be hashed
      * @return hashed password
      */
-    /**private char[] hashPassword(char[] password) {
+    private char[] hashPassword(char[] password) {
         return BCrypt.withDefaults().hashToChar(12, password);
-    */
+
+    }
 }
+
 
 
