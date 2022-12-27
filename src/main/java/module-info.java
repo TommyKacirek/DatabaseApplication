@@ -6,6 +6,8 @@ module org.but.feec.library {
     requires java.sql;
     requires org.slf4j;
     requires com.zaxxer.hikari;
+    requires org.controlsfx.controls;
+    requires fontawesomefx;
 
 
     opens org.but.feec.library to javafx.fxml;
