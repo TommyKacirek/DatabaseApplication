@@ -21,7 +21,6 @@
                         <TableColumn fx:id="GenreColumn"  prefWidth="115.0" text="Genre" />
                         <TableColumn fx:id="CopyColumn"  prefWidth="128.0" text="Copy" />
                         <TableColumn fx:id="BorrowTypeColumn"  prefWidth="134.0" text="Borrow Type" />
-                        <TableColumn fx:id="LocationColumn"  prefWidth="140.6666259765625" text="Location" />
                         <TableColumn fx:id="LanguageColumn"  prefWidth="154.3333740234375" text="Language" />
                     </columns>
                 </TableView>

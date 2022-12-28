@@ -15,21 +15,26 @@ public class LibraryRepository {
         try (Connection connection = DataSourceConfig.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(
                      "SELECT login_email, passwd_hash" +
-                             " FROM bds.sign_in s" +
-                             " WHERE s.login_email = ?")) {
+                             " FROM bds.sign_in " +
+                             " WHERE login_email = ?")) {
 
             preparedStatement.setString(1, email);
             System.out.println(preparedStatement);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
+                    System.out.println("findPersonByEmail if block");
                     return mapToPersonAuth(resultSet);
                 }
             }
         } catch (SQLException e) {
+            System.out.println("LibraryAuthView block:"+ e);
             throw new DataAccessException("Find person by ID with addresses failed.", e);
         }
         return null;
     }
+
+
+
 
 
 
@@ -41,9 +46,18 @@ public class LibraryRepository {
     public List<LibraryBasicView> getPersonsBasicView() {
         try (Connection connection = DataSourceConfig.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(
-                     "SELECT id_person, email, given_name, family_name, nickname, city" +
-                             " FROM bds.person p" +
-                             " LEFT JOIN bds.address a ON p.id_address = a.id_address");
+                     "SELECT given_name, title_name, copy_id, genre, type, name"+
+                             " FROM bds.author " +
+                             " LEFT JOIN bds.author_has_title ON author_author_id = id_address" +
+                             " LEFT JOIN bds.title ON author_has_title.title_title_id = title.title_id " +
+                             " LEFT JOIN bds.copy ON title.title_id = copy.copy_id " +
+                             " LEFT JOIN bds.genre_has_title ON title.title_id = genre_has_title.genre_title_to_genre_id " +
+                             " LEFT JOIN bds.genre ON genre_has_title.genre_title_to_genre_id = genre.title_to_genre_id " +
+                             " LEFT JOIN bds.borrow_type ON copy.copy_id = borrow_type.borrow_type_id " +
+                             " LEFT JOIN bds.lang_name ON copy.copy_id = lang_name.lang_id; "  );
+
+
+
              ResultSet resultSet = preparedStatement.executeQuery();) {
             List<LibraryBasicView> personBasicViews = new ArrayList<>();
             while (resultSet.next()) {
@@ -59,20 +73,21 @@ public class LibraryRepository {
 
     private LibraryAuthView mapToPersonAuth(ResultSet rs) throws SQLException {
         LibraryAuthView person = new LibraryAuthView();
-        person.setEmail(rs.getString("email"));
-        person.setPassword(rs.getString("password"));
+        person.setEmail(rs.getString("login_email"));
+        person.setPassword(rs.getString("passwd_hash"));
         return person;
     }
 
+
+
     private LibraryBasicView mapToPersonBasicView(ResultSet rs) throws SQLException {
         LibraryBasicView libraryBasicViewBasicView = new LibraryBasicView();
-        libraryBasicViewBasicView.setAuthor(rs.getString("author"));
-        libraryBasicViewBasicView.setCopy(rs.getString("title"));
-        libraryBasicViewBasicView.setGenre(rs.getString("copy"));
-        libraryBasicViewBasicView.setBorrow_type(rs.getString("genre"));
-        libraryBasicViewBasicView.setLocation(rs.getString("borrow_type"));
-        libraryBasicViewBasicView.setTitle(rs.getString("location"));
-        libraryBasicViewBasicView.setTitle(rs.getString("language"));
+        libraryBasicViewBasicView.setAuthor(rs.getString("given_name"));
+        libraryBasicViewBasicView.setTitle(rs.getString("title_name"));
+        libraryBasicViewBasicView.setCopy(rs.getLong("copy_id"));
+        libraryBasicViewBasicView.setGenre(rs.getString("genre"));
+        libraryBasicViewBasicView.setBorrow_type(rs.getString("type"));
+        libraryBasicViewBasicView.setLanguage(rs.getString("name"));
         return libraryBasicViewBasicView;
     }
 
@@ -86,4 +101,6 @@ public class LibraryRepository {
 
     public void editPerson(LibraryEditView personEditView) {
     }
+
 }
+

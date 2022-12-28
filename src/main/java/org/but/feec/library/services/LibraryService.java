@@ -18,25 +18,8 @@ public class LibraryService {
         this.libraryRepository = libraryRepository;
     }
 
-    public LibraryDetailView getPersonDetailView(Long id) {
-        return libraryRepository.findPersonDetailedView(id);
-    }
-
     public List<LibraryBasicView> getPersonsBasicView() {
         return libraryRepository.getPersonsBasicView();
-    }
-
-    public void createPerson(LibraryCreateView personCreateView) {
-        // the following three lines can be written in one code line (only for more clear explanation it is written in three lines
-        char[] originalPassword = personCreateView.getPwd();
-        /**char[] hashedPassword = hashPassword(originalPassword);
-         personCreateView.setPwd(hashedPassword);
-         */
-        libraryRepository.createPerson(personCreateView);
-    }
-
-    public void editPerson(LibraryEditView personEditView) {
-        libraryRepository.editPerson(personEditView);
     }
 
     /**
@@ -48,10 +31,14 @@ public class LibraryService {
      * @return hashed password
      */
     private char[] hashPassword(char[] password) {
-        return BCrypt.withDefaults().hashToChar(12, password);
+        return BCrypt.withDefaults().hashToChar(10, password);
 
     }
+
+
 }
+
+
 
 
 

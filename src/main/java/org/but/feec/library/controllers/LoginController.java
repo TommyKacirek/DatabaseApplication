@@ -100,15 +100,19 @@ public class LoginController {
         String username = EnterUsername.getText();
         String password = EnterPassword.getText();
         try {
-            //boolean authenticated = authService.authenticate(username, password);
-            boolean authenticated = true;
+            boolean authenticated = authService.authenticate(username, password);
+            System.out.println("try block");
+            //boolean authenticated = true;
             if (authenticated) {
+                System.out.println("handleSignIn block");
                 authConfirmDialog();
                 showPersonsView();
             } else {
+                System.out.println(" handleSignIn else ");
                 showInvalidPasswordDialog();
             }
         } catch (ResourceNotFoundException | DataAccessException e) {
+            System.out.println("HandleSignIn Catch:" + e);
             showInvalidPasswordDialog();
         }
     }
