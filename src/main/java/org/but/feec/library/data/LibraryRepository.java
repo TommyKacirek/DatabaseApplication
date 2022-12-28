@@ -34,21 +34,12 @@ public class LibraryRepository {
     }
 
 
-
-
-
-
-    /**
-     * What will happen if we do not use LEFT JOIN? What persons will be returned? Ask your self and repeat JOIN from the presentations
-     *
-     * @return list of persons
-     */
     public List<LibraryBasicView> getPersonsBasicView() {
         try (Connection connection = DataSourceConfig.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(
                      "SELECT given_name, title_name, copy_id, genre, type, name"+
                              " FROM bds.author " +
-                             " LEFT JOIN bds.author_has_title ON author_author_id = id_address" +
+                             " LEFT JOIN bds.author_has_title ON author.author_id = author_has_title.author_author_id" +
                              " LEFT JOIN bds.title ON author_has_title.title_title_id = title.title_id " +
                              " LEFT JOIN bds.copy ON title.title_id = copy.copy_id " +
                              " LEFT JOIN bds.genre_has_title ON title.title_id = genre_has_title.genre_title_to_genre_id " +
@@ -59,11 +50,11 @@ public class LibraryRepository {
 
 
              ResultSet resultSet = preparedStatement.executeQuery();) {
-            List<LibraryBasicView> personBasicViews = new ArrayList<>();
+            List<LibraryBasicView> libraryBasicViews = new ArrayList<>();
             while (resultSet.next()) {
-                personBasicViews.add(mapToPersonBasicView(resultSet));
+                libraryBasicViews.add(mapToPersonBasicView(resultSet));
             }
-            return personBasicViews;
+            return libraryBasicViews;
         } catch (SQLException e) {
             throw new DataAccessException("Persons basic view could not be loaded.", e);
         }
@@ -81,14 +72,14 @@ public class LibraryRepository {
 
 
     private LibraryBasicView mapToPersonBasicView(ResultSet rs) throws SQLException {
-        LibraryBasicView libraryBasicViewBasicView = new LibraryBasicView();
-        libraryBasicViewBasicView.setAuthor(rs.getString("given_name"));
-        libraryBasicViewBasicView.setTitle(rs.getString("title_name"));
-        libraryBasicViewBasicView.setCopy(rs.getLong("copy_id"));
-        libraryBasicViewBasicView.setGenre(rs.getString("genre"));
-        libraryBasicViewBasicView.setBorrow_type(rs.getString("type"));
-        libraryBasicViewBasicView.setLanguage(rs.getString("name"));
-        return libraryBasicViewBasicView;
+        LibraryBasicView libraryBasicView = new LibraryBasicView();
+        libraryBasicView.setAuthor(rs.getString("given_name"));
+        libraryBasicView.setTitle(rs.getString("title_name"));
+        libraryBasicView.setCopy(rs.getLong("copy_id"));
+        libraryBasicView.setGenre(rs.getString("genre"));
+        libraryBasicView.setBorrow_type(rs.getString("type"));
+        libraryBasicView.setLanguage(rs.getString("name"));
+        return libraryBasicView;
     }
 
 

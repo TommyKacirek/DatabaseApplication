@@ -28,7 +28,7 @@ public class LibraryPageController {
 
     private static final Logger logger = LoggerFactory.getLogger(LibraryPageController.class);
     @FXML
-    private TableView <LibraryBasicView> SystemTableView;
+    private TableView <LibraryBasicView> LibraryTabelView;
 
     @FXML
     private TableColumn <LibraryBasicView, String> AuthorColumn;
@@ -45,8 +45,6 @@ public class LibraryPageController {
     @FXML
     private TableColumn <LibraryBasicView, String> BorrowTypeColumn;
 
-    @FXML
-    private TableColumn <LibraryBasicView, String> LocationColumn;
 
     @FXML
     private TableColumn <LibraryBasicView, String> LanguageColumn;
@@ -71,21 +69,20 @@ public class LibraryPageController {
     private LibraryRepository libraryRepository;
 
     public void initialize() {
-        libraryService = new LibraryService(libraryRepository);
         libraryRepository = new LibraryRepository();
+        libraryService = new LibraryService(libraryRepository);
 
         AuthorColumn.setCellValueFactory(new PropertyValueFactory<LibraryBasicView, String>("author"));
         TitleColumn.setCellValueFactory(new PropertyValueFactory<LibraryBasicView, String>("title"));
         CopyColumn.setCellValueFactory(new PropertyValueFactory<LibraryBasicView, String>("copy"));
         GenreColumn.setCellValueFactory(new PropertyValueFactory<LibraryBasicView, String>("genre"));
         BorrowTypeColumn.setCellValueFactory(new PropertyValueFactory<LibraryBasicView, String>("borrow_type"));
-        LocationColumn.setCellValueFactory(new PropertyValueFactory<LibraryBasicView, String>("location"));
         LanguageColumn.setCellValueFactory(new PropertyValueFactory<LibraryBasicView, String>("language"));
 
         ObservableList<LibraryBasicView> observablePersonList = initializePersonsData();
-        SystemTableView.setItems(observablePersonList);
+        LibraryTabelView.setItems(observablePersonList);
 
-        SystemTableView.getSortOrder().add(AuthorColumn);
+        LibraryTabelView.getSortOrder().add(AuthorColumn);
 
         logger.info("PersonsController initialized");
 
