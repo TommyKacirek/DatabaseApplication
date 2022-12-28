@@ -106,7 +106,7 @@ public class LoginController {
             if (authenticated) {
                 System.out.println("handleSignIn block");
                 authConfirmDialog();
-                showPersonsView();
+                showLibraryView();
             } else {
                 System.out.println(" handleSignIn else ");
                 showInvalidPasswordDialog();
@@ -117,7 +117,7 @@ public class LoginController {
         }
     }
 
-        private void showPersonsView() {
+        private void showLibraryView() {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader();
                 fxmlLoader.setLocation(App.class.getResource("fxml/LibraryPage.fxml"));

@@ -22,6 +22,10 @@ public class LibraryService {
         return libraryRepository.getPersonsBasicView();
     }
 
+    public void addBook(LibraryEditView libraryEditView){
+        libraryRepository.addBook(libraryEditView);
+    }
+
     /**
      * <p>
      * Note: For implementation details see: https://github.com/patrickfav/bcrypt

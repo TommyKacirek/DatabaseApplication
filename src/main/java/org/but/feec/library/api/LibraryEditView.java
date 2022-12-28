@@ -2,26 +2,18 @@ package org.but.feec.library.api;
 
 public class LibraryEditView {
 
-    private Long id;
-    private String email;
+    private String author;
     private String givenName;
-    private String nickname;
-    private String familyName;
+    private Long born;
+    private String titleName;
+    private Long publicationYear;
 
-    public Long getId() {
-        return id;
+    public String getAuthor() {
+        return author;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
+    public void setAuthor(String author) {
+        this.author = author;
     }
 
     public String getGivenName() {
@@ -32,29 +24,38 @@ public class LibraryEditView {
         this.givenName = givenName;
     }
 
-    public String getNickname() {
-        return nickname;
+    public Long getBorn() {
+        return born;
     }
 
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
+    public void setBorn(Long born) {
+        this.born = born;
     }
 
-    public String getFamilyName() {
-        return familyName;
+    public String getTitleName() {
+        return titleName;
     }
 
-    public void setFamilyName(String familyName) {
-        this.familyName = familyName;
+    public void setTitleName(String titleName) {
+        this.titleName = titleName;
+    }
+
+    public Long getPublicationYear() {
+        return publicationYear;
+    }
+
+    public void setPublicationYear(Long publicationYear) {
+        this.publicationYear = publicationYear;
     }
 
     @Override
     public String toString() {
         return "PersonEditView{" +
-                "email='" + email + '\'' +
-                ", givenName='" + givenName + '\'' +
-                ", nickname='" + nickname + '\'' +
-                ", familyName='" + familyName + '\'' +
+                "author='" + author + '\'' +
+                ", title='" + givenName + '\'' +
+                ", genre='" + born + '\'' +
+                ", copy='" + titleName + '\'' +
+                ", borrow_type='" + publicationYear + '\'' +
                 '}';
     }
 }

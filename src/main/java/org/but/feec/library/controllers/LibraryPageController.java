@@ -8,15 +8,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import org.but.feec.library.App;
 import org.but.feec.library.api.LibraryBasicView;
-import org.but.feec.library.api.LibraryDetailView;
 import org.but.feec.library.data.LibraryRepository;
 import org.but.feec.library.exceptions.ExceptionHandler;
-import org.but.feec.library.services.AuthService;
 import org.but.feec.library.services.LibraryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,28 +22,27 @@ import java.util.List;
 
 public class LibraryPageController {
 
+
     private static final Logger logger = LoggerFactory.getLogger(LibraryPageController.class);
     @FXML
     private TableView <LibraryBasicView> LibraryTabelView;
 
     @FXML
-    private TableColumn <LibraryBasicView, String> AuthorColumn;
+    private TableColumn <LibraryBasicView, String> titleId;
 
     @FXML
-    private TableColumn <LibraryBasicView, String> TitleColumn;
+    private TableColumn <LibraryBasicView, String> titleName;
 
     @FXML
-    private TableColumn <LibraryBasicView, String> CopyColumn;
+    private TableColumn <LibraryBasicView, String> publicationYear;
 
     @FXML
-    private TableColumn <LibraryBasicView, String> GenreColumn;
+    private TableColumn <LibraryBasicView, String> availabilityPresent;
 
     @FXML
-    private TableColumn <LibraryBasicView, String> BorrowTypeColumn;
+    private TableColumn <LibraryBasicView, String> availabilityAbsent;
 
 
-    @FXML
-    private TableColumn <LibraryBasicView, String> LanguageColumn;
 
     @FXML
     private TextField EnterBookTextField;
@@ -72,17 +67,16 @@ public class LibraryPageController {
         libraryRepository = new LibraryRepository();
         libraryService = new LibraryService(libraryRepository);
 
-        AuthorColumn.setCellValueFactory(new PropertyValueFactory<LibraryBasicView, String>("author"));
-        TitleColumn.setCellValueFactory(new PropertyValueFactory<LibraryBasicView, String>("title"));
-        CopyColumn.setCellValueFactory(new PropertyValueFactory<LibraryBasicView, String>("copy"));
-        GenreColumn.setCellValueFactory(new PropertyValueFactory<LibraryBasicView, String>("genre"));
-        BorrowTypeColumn.setCellValueFactory(new PropertyValueFactory<LibraryBasicView, String>("borrow_type"));
-        LanguageColumn.setCellValueFactory(new PropertyValueFactory<LibraryBasicView, String>("language"));
+        titleId.setCellValueFactory(new PropertyValueFactory<LibraryBasicView, String>("titleId"));
+        titleName.setCellValueFactory(new PropertyValueFactory<LibraryBasicView, String>("titleName"));
+        publicationYear.setCellValueFactory(new PropertyValueFactory<LibraryBasicView, String>("publicationYear"));
+        availabilityPresent.setCellValueFactory(new PropertyValueFactory<LibraryBasicView, String>("availabilityPresent"));
+        availabilityAbsent.setCellValueFactory(new PropertyValueFactory<LibraryBasicView, String>("availabilityAbsent"));
 
         ObservableList<LibraryBasicView> observablePersonList = initializePersonsData();
         LibraryTabelView.setItems(observablePersonList);
 
-        LibraryTabelView.getSortOrder().add(AuthorColumn);
+        LibraryTabelView.getSortOrder().add(titleId);
 
         logger.info("PersonsController initialized");
 
@@ -93,4 +87,33 @@ public class LibraryPageController {
         List<LibraryBasicView> persons = libraryService.getPersonsBasicView();
         return FXCollections.observableArrayList(persons);
     }
+
+
+    @FXML
+    private void handleOnBookAction() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(App.class.getResource("fxml/LibraryAddBook.fxml"));
+            Scene scene = new Scene(fxmlLoader.load(), 900, 600);
+            Stage stage = new Stage();
+            stage.setTitle("Samurai Duck Library Add Book");
+            stage.setScene(scene);
+
+            Stage stageOld = (Stage) AddBookButton.getScene().getWindow();
+
+            stage.show();
+        } catch (IOException ex) {
+            ExceptionHandler.handleException(ex);
+        }
+    }
+
+    public void handleRefreshButton(ActionEvent actionEvent) {
+        ObservableList<LibraryBasicView> observablePersonsList = initializePersonsData();
+        LibraryTabelView.setItems(observablePersonsList);
+        LibraryTabelView.refresh();
+        LibraryTabelView.sort();
+    }
+
+
+
 }

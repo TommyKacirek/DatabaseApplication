@@ -9,19 +9,17 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.but.feec.library.controllers.LibraryPageController">
     <center>
         <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #080b0f;" BorderPane.alignment="CENTER">
             <children>
                 <TableView fx:id="LibraryTabelView" layoutY="50.0" prefHeight="411.0" prefWidth="900.0">
                     <columns>
-                        <TableColumn fx:id="AuthorColumn" prefWidth="123.0" text="Author" />
-                        <TableColumn fx:id="TitleColumn"  prefWidth="107.33334350585938" text="Title" />
-                        <TableColumn fx:id="GenreColumn"  prefWidth="115.0" text="Genre" />
-                        <TableColumn fx:id="CopyColumn"  prefWidth="128.0" text="Copy" />
-                        <TableColumn fx:id="BorrowTypeColumn"  prefWidth="134.0" text="Borrow Type" />
-                        <TableColumn fx:id="LanguageColumn"  prefWidth="154.3333740234375" text="Language" />
+                        <TableColumn fx:id="titleId" prefWidth="169.0" text="title id" />
+                        <TableColumn fx:id="titleName" prefWidth="177.0" text="title name" />
+                        <TableColumn fx:id="publicationYear" prefWidth="185.0" text="publication year" />
+                        <TableColumn fx:id="availabilityPresent" prefWidth="190.0" text="availability present" />
+                        <TableColumn fx:id="availabilityAbsent" prefWidth="178.0" text="availability absent" />
                     </columns>
                 </TableView>
                 <Label layoutX="9.0" layoutY="19.0" prefHeight="25.0" prefWidth="257.0" text="Samurai Duck Library" textFill="#72cf9f">
@@ -31,8 +29,8 @@
                 </Label>
                 <Button fx:id="SearchButton" layoutX="343.0" layoutY="476.0" mnemonicParsing="false" style="-fx-background-color: #282828;" text="SEARCH" textFill="#72cf9f" />
                 <TextField fx:id="EnterBookTextField" layoutX="407.0" layoutY="476.0" prefHeight="25.0" prefWidth="164.0" promptText="Enter your book" />
-                <Button fx:id="RefreshButton" layoutX="786.0" layoutY="472.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="85.0" style="-fx-background-color: #282828;" text="Refresh" textFill="#72cf9f" />
-                <Button fx:id="AddBookButton" layoutX="786.0" layoutY="510.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="85.0" style="-fx-background-color: #282828;" text="Add book" textFill="#72cf9f" />
+                <Button fx:id="RefreshButton" layoutX="786.0" layoutY="472.0" mnemonicParsing="false" onAction="#handleRefreshButton" prefHeight="25.0" prefWidth="85.0" style="-fx-background-color: #282828;" text="Refresh" textFill="#72cf9f" />
+                <Button fx:id="AddBookButton" layoutX="786.0" layoutY="510.0" mnemonicParsing="false" onAction="#handleOnBookAction" prefHeight="25.0" prefWidth="85.0" style="-fx-background-color: #282828;" text="Add book" textFill="#72cf9f" />
                 <Button fx:id="TrySQLInjectionButton" layoutX="773.0" layoutY="546.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="106.0" style="-fx-background-color: #282828;" text="Try SQL Injection" textFill="#72cf9f" />
             </children>
         </AnchorPane>

@@ -33,19 +33,13 @@ public class LibraryRepository {
         return null;
     }
 
-
+    //DetailedView
     public List<LibraryBasicView> getPersonsBasicView() {
         try (Connection connection = DataSourceConfig.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(
-                     "SELECT given_name, title_name, copy_id, genre, type, name"+
-                             " FROM bds.author " +
-                             " LEFT JOIN bds.author_has_title ON author.author_id = author_has_title.author_author_id" +
-                             " LEFT JOIN bds.title ON author_has_title.title_title_id = title.title_id " +
-                             " LEFT JOIN bds.copy ON title.title_id = copy.copy_id " +
-                             " LEFT JOIN bds.genre_has_title ON title.title_id = genre_has_title.genre_title_to_genre_id " +
-                             " LEFT JOIN bds.genre ON genre_has_title.genre_title_to_genre_id = genre.title_to_genre_id " +
-                             " LEFT JOIN bds.borrow_type ON copy.copy_id = borrow_type.borrow_type_id " +
-                             " LEFT JOIN bds.lang_name ON copy.copy_id = lang_name.lang_id; "  );
+                     "SELECT title_id, title_name, publication_year, availability_present, availability_absent"+
+                             " FROM bds.title "
+                              );
 
 
 
@@ -73,12 +67,11 @@ public class LibraryRepository {
 
     private LibraryBasicView mapToPersonBasicView(ResultSet rs) throws SQLException {
         LibraryBasicView libraryBasicView = new LibraryBasicView();
-        libraryBasicView.setAuthor(rs.getString("given_name"));
-        libraryBasicView.setTitle(rs.getString("title_name"));
-        libraryBasicView.setCopy(rs.getLong("copy_id"));
-        libraryBasicView.setGenre(rs.getString("genre"));
-        libraryBasicView.setBorrow_type(rs.getString("type"));
-        libraryBasicView.setLanguage(rs.getString("name"));
+        libraryBasicView.setTitleId(rs.getLong("title_id"));
+        libraryBasicView.setTitleName(rs.getString("title_name"));
+        libraryBasicView.setPublicationYear(rs.getLong("publication_year"));
+        libraryBasicView.setAvailabilityPresent(rs.getLong("availability_present"));
+        libraryBasicView.setAvailabilityAbsent(rs.getLong("availability_absent"));
         return libraryBasicView;
     }
 
@@ -93,5 +86,8 @@ public class LibraryRepository {
     public void editPerson(LibraryEditView personEditView) {
     }
 
+    public void addBook(LibraryEditView libraryEditView) {
+        String insertAuthorSQL = "INSERT INTO bds.author (author_id,given_name,family_name,born,died,popularity_rank) VALUES () \n";
+    }
 }
 
