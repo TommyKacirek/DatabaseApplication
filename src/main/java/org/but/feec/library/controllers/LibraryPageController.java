@@ -48,7 +48,7 @@ public class LibraryPageController {
     private TextField EnterBookTextField;
 
     @FXML
-    public Button SearchButton;
+    public Button DetailedViewButton;
 
     @FXML
     public Button RefreshButton;
@@ -58,6 +58,9 @@ public class LibraryPageController {
 
     @FXML
     public Button TrySQLInjectionButton;
+
+    @FXML
+    public Button updateButton;
 
     private LibraryService libraryService;
 
@@ -114,6 +117,41 @@ public class LibraryPageController {
         LibraryTabelView.sort();
     }
 
+    @FXML
+    public void handleDetailedView(ActionEvent actionEvent) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(App.class.getResource("fxml/DetailedView.fxml"));
+            Scene scene = new Scene(fxmlLoader.load(), 900, 600);
+            Stage stage = new Stage();
+            stage.setTitle("Samurai Duck Library Detail View");
+            stage.setScene(scene);
 
+            Stage stageOld = (Stage) DetailedViewButton.getScene().getWindow();
 
+            stage.show();
+        } catch (IOException ex) {
+            ExceptionHandler.handleException(ex);
+        }
+    }
+
+    @FXML
+    private void handleUpdateButton() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(App.class.getResource("fxml/UpdateView.fxml"));
+            Scene scene = new Scene(fxmlLoader.load(), 900, 600);
+            Stage stage = new Stage();
+            stage.setTitle("Samurai Duck Library UpdateView");
+            stage.setScene(scene);
+
+            Stage stageOld = (Stage) updateButton.getScene().getWindow();
+
+            stage.show();
+        } catch (IOException ex) {
+            ExceptionHandler.handleException(ex);
+        }
+    }
 }
+
+

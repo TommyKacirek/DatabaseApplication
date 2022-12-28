@@ -1,10 +1,7 @@
 package org.but.feec.library.services;
 
 
-import org.but.feec.library.api.LibraryBasicView;
-import org.but.feec.library.api.LibraryCreateView;
-import org.but.feec.library.api.LibraryDetailView;
-import org.but.feec.library.api.LibraryEditView;
+import org.but.feec.library.api.*;
 import org.but.feec.library.data.LibraryRepository;
 import at.favre.lib.crypto.bcrypt.BCrypt;
 import java.util.List;
@@ -20,6 +17,10 @@ public class LibraryService {
 
     public List<LibraryBasicView> getPersonsBasicView() {
         return libraryRepository.getPersonsBasicView();
+    }
+
+    public List<LibraryDetailView> getPersonsDetailView(){
+        return libraryRepository.getPersonsDetailView();
     }
 
     public void addBook(LibraryEditView libraryEditView){
@@ -40,6 +41,9 @@ public class LibraryService {
     }
 
 
+    public void libraryUpdate(LibraryUpdateView libraryUpdateView) {
+        libraryRepository.libraryUpdate(libraryUpdateView);
+    }
 }
 
 

@@ -1,6 +1,5 @@
 package org.but.feec.library.data;
 
-import javafx.scene.control.cell.PropertyValueFactory;
 import org.but.feec.library.api.*;
 import org.but.feec.library.config.DataSourceConfig;
 import org.but.feec.library.exceptions.DataAccessException;
@@ -87,7 +86,119 @@ public class LibraryRepository {
     }
 
     public void addBook(LibraryEditView libraryEditView) {
-        String insertAuthorSQL = "INSERT INTO bds.author (author_id,given_name,family_name,born,died,popularity_rank) VALUES () \n";
+        String insertAuthorSQL = "INSERT INTO bds.author (given_name,born) VALUES (?,?) \n";
+        String insertTitleSQL = "INSERT INTO bds.title (title_name,publication_year,availability_present,availability_absent) VALUES (?,?,0,0) \n";
+        String insertConnectionSQL = "INSERT INTO bds.author_has_title(author_author_id,title_title_id) VALUES ((SELECT author_id FROM bds.author WHERE given_name = ?), " +
+                "(SELECT title_id FROM bds.title WHERE title_name=?));\n";
+        try (Connection connection = DataSourceConfig.getConnection();
+
+             PreparedStatement preparedStatement = connection.prepareStatement(insertAuthorSQL, Statement.RETURN_GENERATED_KEYS)) {
+            System.out.println(preparedStatement);
+            // set prepared statement variables
+            preparedStatement.setString(1, libraryEditView.getAuthor());
+            preparedStatement.setLong(2, libraryEditView.getBorn());
+            int affectedRows = preparedStatement.executeUpdate();
+
+
+
+            if (affectedRows == 0) {
+                throw new DataAccessException("Creating book failed, no rows affected.");
+            }
+        } catch (SQLException e) {
+            throw new DataAccessException("Creating book failed operation on the database failed." + e);
+        }
+
+        try (Connection connection = DataSourceConfig.getConnection();
+
+             PreparedStatement preparedStatement = connection.prepareStatement(insertTitleSQL, Statement.RETURN_GENERATED_KEYS)) {
+            System.out.println(preparedStatement);
+            // set prepared statement variables
+            preparedStatement.setString(1, libraryEditView.getTitleName());
+            preparedStatement.setLong(2, libraryEditView.getPublicationYear());
+            int affectedRows = preparedStatement.executeUpdate();
+
+
+
+            if (affectedRows == 0) {
+                throw new DataAccessException("Creating book failed, no rows affected.");
+            }
+        } catch (SQLException e) {
+            throw new DataAccessException("Creating book failed operation on the database failed." + e);
+        }
+        try (Connection connection = DataSourceConfig.getConnection();
+             // would be beneficial if I will return the created entity back
+             PreparedStatement preparedStatement = connection.prepareStatement(insertConnectionSQL, Statement.RETURN_GENERATED_KEYS)) {
+            System.out.println();
+            System.out.println(preparedStatement);
+            // set prepared statement variables
+            preparedStatement.setString(1,   libraryEditView.getAuthor());
+            preparedStatement.setString(2, libraryEditView.getTitleName());
+            int affectedRows = preparedStatement.executeUpdate();
+
+            if (affectedRows == 0) {
+                throw new DataAccessException("Creating book failed, no rows affected.");
+            }
+        } catch (SQLException e) {
+            throw new DataAccessException("Creating book failed operation on the database failed."+ e);
+        }
+    }
+
+
+    public List<LibraryDetailView> getPersonsDetailView() {
+        try (Connection connection = DataSourceConfig.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(
+                     "SELECT given_name, title_name, copy_id, genre, type, name"+
+                             " FROM bds.author " +
+                             " LEFT JOIN bds.author_has_title ON author.author_id = author_has_title.author_author_id" +
+                             " LEFT JOIN bds.title ON author_has_title.title_title_id = title.title_id " +
+                             " LEFT JOIN bds.copy ON title.title_id = copy.copy_id " +
+                             " LEFT JOIN bds.genre_has_title ON title.title_id = genre_has_title.genre_title_to_genre_id " +
+                             " LEFT JOIN bds.genre ON genre_has_title.genre_title_to_genre_id = genre.title_to_genre_id " +
+                             " LEFT JOIN bds.borrow_type ON copy.copy_id = borrow_type.borrow_type_id " +
+                             " LEFT JOIN bds.lang_name ON copy.copy_id = lang_name.lang_id; "
+             );
+
+
+
+             ResultSet resultSet = preparedStatement.executeQuery();) {
+            List<LibraryDetailView> libraryDetailViews = new ArrayList<>();
+            while (resultSet.next()) {
+                libraryDetailViews.add(mapToPersonDetailView(resultSet));
+            }
+            return libraryDetailViews;
+        } catch (SQLException e) {
+            throw new DataAccessException("Persons basic view could not be loaded.", e);
+        }
+    }
+
+    private LibraryDetailView mapToPersonDetailView(ResultSet rs) throws SQLException {
+        LibraryDetailView libraryDetailViews = new LibraryDetailView();
+        libraryDetailViews.setGivenNameColumn(rs.getString("given_name"));
+        libraryDetailViews.setTitleNameColumn(rs.getString("title_name"));
+        libraryDetailViews.setCopyIdColumn(rs.getLong("copy_id"));
+        libraryDetailViews.setGenreColumn(rs.getString("genre"));
+        libraryDetailViews.setBorrowTypeColumn(rs.getString("type"));
+        libraryDetailViews.setLanguageColumn(rs.getString("name"));
+        return libraryDetailViews;
+    }
+
+    public void libraryUpdate(LibraryUpdateView libraryUpdateView) {
+        String insertPersonSQL = "UPDATE bds.title  SET title_name = ?, publication_year = ?, availability_present = ?, availability_absent = ? WHERE title_name = ?";
+
+        try (Connection connection = DataSourceConfig.getConnection();
+
+             PreparedStatement preparedStatement = connection.prepareStatement(insertPersonSQL, Statement.RETURN_GENERATED_KEYS)) {
+
+            preparedStatement.setString(1, libraryUpdateView.getEnterTitleName());
+            preparedStatement.setLong(2, libraryUpdateView.getEnterPublicationYear());
+            preparedStatement.setLong(3, libraryUpdateView.getEnterAvailabilityPresent());
+            preparedStatement.setLong(4, libraryUpdateView.getGetEnterAvailabilityAbsent());
+
+        } catch (SQLException e) {
+            throw new DataAccessException("Creating person failed operation on the database failed." + e );
+        }
+
+
     }
 }
 

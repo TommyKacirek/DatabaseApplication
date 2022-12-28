@@ -4,7 +4,6 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
@@ -27,11 +26,15 @@
                         <Font name="Comic Sans MS" size="18.0" />
                     </font>
                 </Label>
-                <Button fx:id="SearchButton" layoutX="343.0" layoutY="476.0" mnemonicParsing="false" style="-fx-background-color: #282828;" text="SEARCH" textFill="#72cf9f" />
-                <TextField fx:id="EnterBookTextField" layoutX="407.0" layoutY="476.0" prefHeight="25.0" prefWidth="164.0" promptText="Enter your book" />
-                <Button fx:id="RefreshButton" layoutX="786.0" layoutY="472.0" mnemonicParsing="false" onAction="#handleRefreshButton" prefHeight="25.0" prefWidth="85.0" style="-fx-background-color: #282828;" text="Refresh" textFill="#72cf9f" />
-                <Button fx:id="AddBookButton" layoutX="786.0" layoutY="510.0" mnemonicParsing="false" onAction="#handleOnBookAction" prefHeight="25.0" prefWidth="85.0" style="-fx-background-color: #282828;" text="Add book" textFill="#72cf9f" />
-                <Button fx:id="TrySQLInjectionButton" layoutX="773.0" layoutY="546.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="106.0" style="-fx-background-color: #282828;" text="Try SQL Injection" textFill="#72cf9f" />
+                <Button fx:id="DetailedViewButton" layoutX="34.0" layoutY="498.0" mnemonicParsing="false" onAction="#handleDetailedView" style="-fx-background-color: #282828;" text="Deatiled View" textFill="#72cf9f" />
+                <Button fx:id="RefreshButton" layoutX="181.0" layoutY="498.0" mnemonicParsing="false" onAction="#handleRefreshButton" prefHeight="25.0" prefWidth="85.0" style="-fx-background-color: #282828;" text="Refresh" textFill="#72cf9f" />
+                <Button fx:id="AddBookButton" layoutX="315.0" layoutY="498.0" mnemonicParsing="false" onAction="#handleOnBookAction" prefHeight="25.0" prefWidth="85.0" style="-fx-background-color: #282828;" text="Add book" textFill="#72cf9f" />
+                <Button fx:id="TrySQLInjectionButton" layoutX="529.0" layoutY="498.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="106.0" style="-fx-background-color: #282828;" text="Try SQL Injection" textFill="#72cf9f" />
+            <Button fx:id="updateButton" layoutX="429.0" layoutY="494.0" mnemonicParsing="false" onAction="#handleUpdateButton" prefHeight="29.0" prefWidth="75.0" style="-fx-background-color: #282828;" text="Update" textFill="#72cf9f">
+               <font>
+                  <Font name="Comic Sans MS" size="12.0" />
+               </font>
+            </Button>
             </children>
         </AnchorPane>
     </center>

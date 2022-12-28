@@ -97,7 +97,7 @@ public class LibraryAddBook {
         alert.setTitle("Book Added");
         alert.setHeaderText("Book successfully added.");
 
-        Timeline idlestage = new Timeline(new KeyFrame(Duration.seconds(3), new EventHandler<ActionEvent>() {
+        Timeline idlestage = new Timeline(new KeyFrame(Duration.seconds(2), new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 alert.setResult(ButtonType.CANCEL);

@@ -13,8 +13,8 @@
    <center>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #080b0f;" BorderPane.alignment="CENTER">
          <children>
-            <TextField fx:id="enterAuthor" layoutX="131.0" layoutY="136.0" promptText="Enter author" />
-            <TextField fx:id="enterGivenName" layoutX="131.0" layoutY="203.0" promptText="Enter given name" />
+            <TextField fx:id="enterAuthor" layoutX="131.0" layoutY="136.0" promptText="Enter author name" />
+            <TextField fx:id="enterGivenName" layoutX="131.0" layoutY="203.0" promptText="Enter family name" />
             <TextField fx:id="enterBorn" layoutX="131.0" layoutY="275.0" promptText="Enter born" />
             <TextField fx:id="enterTitleName" layoutX="131.0" layoutY="353.0" promptText="Enter title name" />
             <TextField fx:id="enterPublicationYear" layoutX="131.0" layoutY="433.0" promptText="Enter publication year" />
