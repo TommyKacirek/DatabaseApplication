@@ -64,8 +64,6 @@ public class LibraryPageController {
     @FXML
     public Button TrySQLInjectionButton;
 
-    @FXML
-    public Button updateButton;
 
     private LibraryService libraryService;
 
@@ -207,8 +205,26 @@ public class LibraryPageController {
     }
 
     public void handleInjection(ActionEvent event) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(App.class.getResource("fxml/InjectionView.fxml"));
+            Stage stage = new Stage();
+
+            LibraryInjectionController libraryInjectionController = new LibraryInjectionController();
+            libraryInjectionController.setStage(stage);
+            fxmlLoader.setController(libraryInjectionController);
+            Scene scene = new Scene(fxmlLoader.load(), 900, 600);
+            //Stage stageOld = (Stage) TrySQLInjectionButton.getScene().getWindow();
+
+            stage.setTitle("Samurai Duck Library Injection View");
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (IOException ex) {
+            ExceptionHandler.handleException(ex);
+        }
+
 
     }
 }
-
 

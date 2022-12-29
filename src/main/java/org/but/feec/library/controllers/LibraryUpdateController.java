@@ -44,6 +44,7 @@ public class LibraryUpdateController {
     private ValidationSupport validation;
 
     private long enterTitleId;
+    public LibraryBasicView libraryBasicView;
     public Stage stage;
 
     public void setStage(Stage stage) {
@@ -55,6 +56,7 @@ public class LibraryUpdateController {
     public void initialize(){
         libraryRepository = new LibraryRepository();
         libraryService = new LibraryService(libraryRepository);
+        libraryBasicView = new LibraryBasicView();
 
         validation = new ValidationSupport();
         validation.registerValidator(enterTitleName, Validator.createEmptyValidator("The title name must not be empty."));
@@ -75,8 +77,8 @@ public class LibraryUpdateController {
         this.stage = new Stage();
         Stage stage = this.stage;
         if (stage.getUserData() instanceof LibraryBasicView) {
-            LibraryBasicView libraryBasicView = (LibraryBasicView) stage.getUserData();
-            enterTitleId = libraryBasicView.getTitleId();
+             libraryBasicView = (LibraryBasicView) stage.getUserData();
+            //enterTitleId = libraryBasicView.getTitleId();
             enterTitleName.setText(String.valueOf(libraryBasicView.getTitleName()));
             enterPublicationYear.setText(String.valueOf(libraryBasicView.getPublicationYear()));
             enterAvailabilityPresent.setText(String.valueOf(libraryBasicView.getAvailabilityPresent()));
@@ -87,6 +89,7 @@ public class LibraryUpdateController {
     }
     @FXML
     public void handleUpdateTitle(ActionEvent event){
+        Long enterTitleId = libraryBasicView.getTitleId();
         String titleName = String.valueOf(enterTitleName.getText());
         Long publicationYear = Long.valueOf(enterPublicationYear.getText());
         Long availabilityPresent = Long.valueOf(enterAvailabilityPresent.getText());
@@ -95,6 +98,7 @@ public class LibraryUpdateController {
 
 
         LibraryUpdateView libraryUpdateView = new LibraryUpdateView();
+        libraryUpdateView.setEnterTitleId(enterTitleId);
         libraryUpdateView.setEnterTitleName(titleName);
         libraryUpdateView.setEnterPublicationYear(publicationYear);
         libraryUpdateView.setEnterAvailabilityPresent(availabilityPresent);

@@ -1,16 +1,10 @@
 package org.but.feec.library.controllers;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 import org.but.feec.library.api.LibraryEditView;
 import org.but.feec.library.data.LibraryRepository;
 import org.but.feec.library.services.LibraryService;
@@ -20,13 +14,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOError;
-import java.io.IOException;
-import java.sql.SQLException;
-import java.util.Date;
-import java.util.Optional;
 
-public class LibraryAddBook {
-    private static final Logger logger = LoggerFactory.getLogger(LibraryAddBook.class);
+public class LibraryAddBookController {
+    private static final Logger logger = LoggerFactory.getLogger(LibraryAddBookController.class);
     @FXML
     public Button ApplyEditButton;
 

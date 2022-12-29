@@ -230,18 +230,17 @@ public class LibraryRepository {
     }
 
     public void libraryUpdate(LibraryUpdateView libraryUpdateView) {
-        String insertPersonSQL = "UPDATE bds.title  SET title_id = ? title_name = ?, publication_year = ?, availability_present = ?, availability_absent = ? WHERE title_id = ?";
+        String insertPersonSQL = "UPDATE bds.title  SET title_name = ?, publication_year = ?, availability_present = ?, availability_absent = ? WHERE title_id = ?";
 
         try (Connection connection = DataSourceConfig.getConnection();
 
              PreparedStatement preparedStatement = connection.prepareStatement(insertPersonSQL)) {
 
-            preparedStatement.setLong(1, libraryUpdateView.getEnterTitleId());
-            preparedStatement.setString(2, libraryUpdateView.getEnterTitleName());
-            preparedStatement.setLong(3, libraryUpdateView.getEnterPublicationYear());
-            preparedStatement.setLong(4, libraryUpdateView.getEnterAvailabilityPresent());
-            preparedStatement.setLong(5, libraryUpdateView.getGetEnterAvailabilityAbsent());
-            preparedStatement.setString(6,libraryUpdateView.getEnterTitleName());
+            preparedStatement.setString(1, libraryUpdateView.getEnterTitleName());
+            preparedStatement.setLong(2, libraryUpdateView.getEnterPublicationYear());
+            preparedStatement.setLong(3, libraryUpdateView.getEnterAvailabilityPresent());
+            preparedStatement.setLong(4, libraryUpdateView.getGetEnterAvailabilityAbsent());
+            preparedStatement.setLong(5,libraryUpdateView.getEnterTitleId());
 
         } catch (SQLException e) {
             throw new DataAccessException("Creating person failed operation on the database failed." + e );
@@ -261,7 +260,7 @@ public class LibraryRepository {
         ) {
             preparedStatement.setString(1,filter);
             ResultSet resultSet = preparedStatement.executeQuery();
-            List<org.but.feec.library.api.LibraryFilterView> libraryFilterView = new ArrayList<>();
+            List<LibraryFilterView> libraryFilterView = new ArrayList<>();
             while (resultSet.next()) {
                 libraryFilterView.add(mapToBookFilterView(resultSet));
             }
@@ -295,6 +294,34 @@ public class LibraryRepository {
         catch (SQLException e) {
             System.out.println("failed");
         }
+    }
+
+    public List<LibraryInjectionView> getInjectionView(String input) {
+        String InjectionSQL = "SELECT id, name, username FROM bds.injection_attack" +
+                " WHERE id = "+input;
+        try (Connection connection = DataSourceConfig.getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(InjectionSQL))
+
+         {
+            List<LibraryInjectionView> libraryInjectionView = new ArrayList<>();
+            while (resultSet.next()) {
+                libraryInjectionView.add(mapToInjectionView(resultSet));
+            }
+            return libraryInjectionView;
+        }
+        catch (SQLException e) {
+            throw new DataAccessException("Library filter view could not be loaded." + e);
+        }
+    }
+
+    private LibraryInjectionView mapToInjectionView(ResultSet resultSet) throws SQLException {
+        LibraryInjectionView libraryInjectionView = new LibraryInjectionView();
+        libraryInjectionView.setIdColumn(resultSet.getLong("id"));
+        libraryInjectionView.setNameColumn(resultSet.getString("name"));
+        libraryInjectionView.setUsernameColumn(resultSet.getString("username"));
+
+        return libraryInjectionView;
     }
 }
 

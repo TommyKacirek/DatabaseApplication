@@ -48,6 +48,10 @@ public class LibraryService {
     public List<LibraryFilterView> getBookFilterView(String text) {
         return libraryRepository.getBookFilterView(text);
     }
+
+    public List<LibraryInjectionView> getInjectionView(String text) {
+        return libraryRepository.getInjectionView(text);
+    }
 }
 
 
