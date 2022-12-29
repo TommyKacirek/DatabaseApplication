@@ -108,12 +108,12 @@ public class LibraryRepository {
                     ps.setString(1, libraryEditView.getTitleName());
 
                     if (affectedRows == 0) {
-                        throw new DataAccessException("Creating book failed, no rows affected.");
+                        throw new DataAccessException("book add failed.");
                     }
 
                     ps.execute();
                 } catch (SQLException e) {
-                    throw new DataAccessException("This is already added." + e);
+                    throw new DataAccessException("opsie." + e);
                 }
 
                 System.out.println(connection);
@@ -230,16 +230,18 @@ public class LibraryRepository {
     }
 
     public void libraryUpdate(LibraryUpdateView libraryUpdateView) {
-        String insertPersonSQL = "UPDATE bds.title  SET title_name = ?, publication_year = ?, availability_present = ?, availability_absent = ? WHERE title_name = ?";
+        String insertPersonSQL = "UPDATE bds.title  SET title_id = ? title_name = ?, publication_year = ?, availability_present = ?, availability_absent = ? WHERE title_id = ?";
 
         try (Connection connection = DataSourceConfig.getConnection();
 
-             PreparedStatement preparedStatement = connection.prepareStatement(insertPersonSQL, Statement.RETURN_GENERATED_KEYS)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(insertPersonSQL)) {
 
-            preparedStatement.setString(1, libraryUpdateView.getEnterTitleName());
-            preparedStatement.setLong(2, libraryUpdateView.getEnterPublicationYear());
-            preparedStatement.setLong(3, libraryUpdateView.getEnterAvailabilityPresent());
-            preparedStatement.setLong(4, libraryUpdateView.getGetEnterAvailabilityAbsent());
+            preparedStatement.setLong(1, libraryUpdateView.getEnterTitleId());
+            preparedStatement.setString(2, libraryUpdateView.getEnterTitleName());
+            preparedStatement.setLong(3, libraryUpdateView.getEnterPublicationYear());
+            preparedStatement.setLong(4, libraryUpdateView.getEnterAvailabilityPresent());
+            preparedStatement.setLong(5, libraryUpdateView.getGetEnterAvailabilityAbsent());
+            preparedStatement.setString(6,libraryUpdateView.getEnterTitleName());
 
         } catch (SQLException e) {
             throw new DataAccessException("Creating person failed operation on the database failed." + e );
@@ -278,6 +280,21 @@ public class LibraryRepository {
         libraryFilterView.setAvailabilityPresent(rs.getLong("availability_present"));
         libraryFilterView.setAvailabilityAbsent(rs.getLong("availability_absent"));
         return libraryFilterView;
+    }
+
+    public void removeBook(long titleId) {
+        String deleteBookSQL =  "DELETE FROM bds.title WHERE title_id = ?";
+        System.out.println(deleteBookSQL);
+        try (Connection connection = DataSourceConfig.getConnection();
+             PreparedStatement prepareStatement = connection.prepareStatement(deleteBookSQL)){
+
+            prepareStatement.setLong(1, titleId);
+            prepareStatement.executeUpdate();
+
+        }
+        catch (SQLException e) {
+            System.out.println("failed");
+        }
     }
 }
 

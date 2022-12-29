@@ -23,6 +23,7 @@ import java.util.Optional;
 public class LibraryUpdateController {
     private static final Logger logger = LoggerFactory.getLogger(LibraryUpdateController.class);
 
+
     @FXML
     public TextField enterTitleName;
 
@@ -42,10 +43,12 @@ public class LibraryUpdateController {
     private LibraryRepository libraryRepository;
     private ValidationSupport validation;
 
+    private long enterTitleId;
     public Stage stage;
 
     public void setStage(Stage stage) {
         this.stage = stage;
+
     }
 
     @FXML
@@ -54,35 +57,37 @@ public class LibraryUpdateController {
         libraryService = new LibraryService(libraryRepository);
 
         validation = new ValidationSupport();
-        validation.registerValidator(enterTitleName, Validator.createEmptyValidator("The id must not be empty."));
-        validation.registerValidator(enterPublicationYear, Validator.createEmptyValidator("The email must not be empty."));
-        validation.registerValidator(enterAvailabilityPresent, Validator.createEmptyValidator("The first name must not be empty."));
-        validation.registerValidator(enterAvailabilityAbsent, Validator.createEmptyValidator("The last name must not be empty."));
+        validation.registerValidator(enterTitleName, Validator.createEmptyValidator("The title name must not be empty."));
+        validation.registerValidator(enterPublicationYear, Validator.createEmptyValidator("The publication year must not be empty."));
+        validation.registerValidator(enterAvailabilityPresent, Validator.createEmptyValidator("The availability present must not be empty."));
+        validation.registerValidator(enterAvailabilityAbsent, Validator.createEmptyValidator("The availability absent must not be empty."));
 
         updateButton.disableProperty().bind(validation.invalidProperty());
 
         loadPersonsData();
-
         logger.info("LibraryUpdateController initialized");
 
     }
 
+
+
     private void loadPersonsData() {
         this.stage = new Stage();
         Stage stage = this.stage;
-        if (stage.getUserData() instanceof LibraryUpdateView) {
-            LibraryUpdateView libraryUpdateView = (LibraryUpdateView) stage.getUserData();
-            enterTitleName.setText(String.valueOf(libraryUpdateView.getEnterTitleName()));
-            enterPublicationYear.setText(String.valueOf(libraryUpdateView.getEnterPublicationYear()));
-            enterAvailabilityPresent.setText(String.valueOf(libraryUpdateView.getEnterAvailabilityPresent()));
-            enterAvailabilityAbsent.setText(String.valueOf(libraryUpdateView.getGetEnterAvailabilityAbsent()));
+        if (stage.getUserData() instanceof LibraryBasicView) {
+            LibraryBasicView libraryBasicView = (LibraryBasicView) stage.getUserData();
+            enterTitleId = libraryBasicView.getTitleId();
+            enterTitleName.setText(String.valueOf(libraryBasicView.getTitleName()));
+            enterPublicationYear.setText(String.valueOf(libraryBasicView.getPublicationYear()));
+            enterAvailabilityPresent.setText(String.valueOf(libraryBasicView.getAvailabilityPresent()));
+            enterAvailabilityAbsent.setText(String.valueOf(libraryBasicView.getAvailabilityAbsent()));
         }
 
 
     }
-
+    @FXML
     public void handleUpdateTitle(ActionEvent event){
-        String titleName = enterTitleName.getText();
+        String titleName = String.valueOf(enterTitleName.getText());
         Long publicationYear = Long.valueOf(enterPublicationYear.getText());
         Long availabilityPresent = Long.valueOf(enterAvailabilityPresent.getText());
         Long availabilityAbsent = Long.valueOf(enterAvailabilityAbsent.getText());

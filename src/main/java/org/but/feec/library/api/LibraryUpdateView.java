@@ -7,10 +7,23 @@ import javafx.beans.property.StringProperty;
 
 public class LibraryUpdateView {
 
+    private LongProperty enterTitleId = new SimpleLongProperty();
     private StringProperty enterTitleName = new SimpleStringProperty();
     private LongProperty enterPublicationYear = new SimpleLongProperty();
     private LongProperty enterAvailabilityPresent = new SimpleLongProperty();
     private LongProperty getEnterAvailabilityAbsent = new SimpleLongProperty();
+
+    public long getEnterTitleId() {
+        return enterTitleId.get();
+    }
+
+    public LongProperty enterTitleIdProperty() {
+        return enterTitleId;
+    }
+
+    public void setEnterTitleId(long enterTitleId) {
+        this.enterTitleId.set(enterTitleId);
+    }
 
     public String getEnterTitleName() {
         return enterTitleName.get();

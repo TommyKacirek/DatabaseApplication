@@ -9,8 +9,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.but.feec.library.controllers.LibraryUpdateController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <center>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #080b0f;" BorderPane.alignment="CENTER">
          <children>
@@ -48,7 +47,7 @@
                   <Image url="@../images/Duck.png" />
                </image>
             </ImageView>
-            <Button fx:id="updateButton" layoutX="641.0" layoutY="499.0" mnemonicParsing="false" style="-fx-background-color: #282828;" onAction="#handleUpdateTitle" text="Update" textFill="#72cf9f">
+            <Button fx:id="updateButton" layoutX="641.0" layoutY="499.0" mnemonicParsing="false" onAction="#handleUpdateTitle" style="-fx-background-color: #282828;" text="Update" textFill="#72cf9f">
                <font>
                   <Font size="13.0" />
                </font>

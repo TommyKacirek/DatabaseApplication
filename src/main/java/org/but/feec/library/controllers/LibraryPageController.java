@@ -86,6 +86,8 @@ public class LibraryPageController {
 
         LibraryTabelView.getSortOrder().add(titleId);
 
+        initializeTableViewSelection();
+
         logger.info("LibraryPageController initialized");
 
 
@@ -140,22 +142,45 @@ public class LibraryPageController {
         }
     }
 
-    @FXML
-    private void handleUpdateButton() {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(App.class.getResource("fxml/UpdateView.fxml"));
-            Scene scene = new Scene(fxmlLoader.load(), 900, 600);
-            Stage stage = new Stage();
-            stage.setTitle("Samurai Duck Library UpdateView");
-            stage.setScene(scene);
+    private void initializeTableViewSelection() {
+        MenuItem update = new MenuItem("Update Book");
+        MenuItem delete = new MenuItem("Delete");
+        update.setOnAction((ActionEvent event) -> {
+            LibraryBasicView updateView = LibraryTabelView.getSelectionModel().getSelectedItem();
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader();
+                fxmlLoader.setLocation(App.class.getResource("fxml/UpdateView.fxml"));
+                Stage stage = new Stage();
+                stage.setUserData(updateView);
+                stage.setTitle("Samurai Duck Library Update");
 
-            Stage stageOld = (Stage) updateButton.getScene().getWindow();
+                LibraryUpdateController controller = new LibraryUpdateController();
+                controller.setStage(stage);
+                fxmlLoader.setController(controller);
 
-            stage.show();
-        } catch (IOException ex) {
-            ExceptionHandler.handleException(ex);
-        }
+                Scene scene = new Scene(fxmlLoader.load(), 900, 600);
+
+                stage.setScene(scene);
+
+                stage.show();
+            } catch (IOException ex) {
+                ExceptionHandler.handleException(ex);
+            }
+        });
+
+
+
+        delete.setOnAction((ActionEvent event) -> {
+            LibraryBasicView bookView = LibraryTabelView.getSelectionModel().getSelectedItem();
+            long titleId = bookView.getTitleId();
+            libraryRepository.removeBook(titleId);
+        });
+
+
+        ContextMenu menu = new ContextMenu();
+        menu.getItems().add(update);
+        menu.getItems().add(delete);
+        LibraryTabelView.setContextMenu(menu);
     }
 
     public void handleFilterButton(ActionEvent actionEvent){
