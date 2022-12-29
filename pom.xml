@@ -26,6 +26,7 @@
             <groupId>de.jensd</groupId>
             <artifactId>fontawesomefx</artifactId>
             <version>8.9</version>
+
         </dependency>
         <!-- JavaFX -->
         <!-- https://mvnrepository.com/artifact/org.openjfx/javafx-fxml -->

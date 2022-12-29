@@ -45,8 +45,13 @@ public class LibraryPageController {
 
 
     @FXML
-    private TextField EnterBookTextField;
+    public TextField EnterBookTextField;
 
+    @FXML
+    private TextField searchBar;
+
+    @FXML
+    public Button filterButton;
     @FXML
     public Button DetailedViewButton;
 
@@ -81,7 +86,7 @@ public class LibraryPageController {
 
         LibraryTabelView.getSortOrder().add(titleId);
 
-        logger.info("PersonsController initialized");
+        logger.info("LibraryPageController initialized");
 
 
     }
@@ -151,6 +156,33 @@ public class LibraryPageController {
         } catch (IOException ex) {
             ExceptionHandler.handleException(ex);
         }
+    }
+
+    public void handleFilterButton(ActionEvent actionEvent){
+        try {
+            String text = searchBar.getText();
+            System.out.println("handler" +text);
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(App.class.getResource("fxml/FilterView.fxml"));
+            Stage stage = new Stage();
+            LibraryFilterController libraryFilterController = new LibraryFilterController();
+            stage.setUserData(text);
+            libraryFilterController.setStage(stage);
+            fxmlLoader.setController(libraryFilterController);
+            Scene scene = new Scene(fxmlLoader.load(), 900, 600);
+
+
+            stage.setTitle("Filtered view");
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (IOException ex) {
+            ExceptionHandler.handleException(ex);
+        }
+    }
+
+    public void handleInjection(ActionEvent event) {
+
     }
 }
 

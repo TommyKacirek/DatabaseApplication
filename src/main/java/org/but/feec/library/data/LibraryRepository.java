@@ -1,5 +1,7 @@
 package org.but.feec.library.data;
 
+
+import javafx.scene.chart.PieChart;
 import org.but.feec.library.api.*;
 import org.but.feec.library.config.DataSourceConfig;
 import org.but.feec.library.exceptions.DataAccessException;
@@ -75,28 +77,69 @@ public class LibraryRepository {
     }
 
 
-    public LibraryDetailView findPersonDetailedView(Long id) {
-        return null;
-    }
-
-    public void createPerson(LibraryCreateView personCreateView) {
-    }
-
-    public void editPerson(LibraryEditView personEditView) {
-    }
 
     public void addBook(LibraryEditView libraryEditView) {
-        String insertAuthorSQL = "INSERT INTO bds.author (given_name,born) VALUES (?,?) \n";
-        String insertTitleSQL = "INSERT INTO bds.title (title_name,publication_year,availability_present,availability_absent) VALUES (?,?,0,0) \n";
-        String insertConnectionSQL = "INSERT INTO bds.author_has_title(author_author_id,title_title_id) VALUES ((SELECT author_id FROM bds.author WHERE given_name = ?), " +
-                "(SELECT title_id FROM bds.title WHERE title_name=?));\n";
+        String insertAuthorSQL = "INSERT INTO bds.author (given_name,family_name,born) VALUES (?,?,?); " +
+                                 "INSERT INTO bds.title (title_name,publication_year,availability_present,availability_absent) VALUES (?,?,0,0); " +
+                                 "INSERT INTO bds.author_has_title(author_author_id,title_title_id) VALUES ((SELECT author_id FROM bds.author WHERE given_name = ?), " +
+                                 "(SELECT title_id FROM bds.title WHERE title_name=?));";
+
+        String checkIfExists = "SELECT title_name FROM bds.title WHERE title_name= ?";
+
         try (Connection connection = DataSourceConfig.getConnection();
+             // would be beneficial if I will return the created entity back
+             PreparedStatement preparedStatement = connection.prepareStatement(insertAuthorSQL)) {
+            // set prepared statement variables
+            preparedStatement.setString(1, libraryEditView.getAuthor());
+            preparedStatement.setString(2, libraryEditView.getGivenName());
+            preparedStatement.setLong(3,libraryEditView.getBorn());
+            preparedStatement.setString(4, libraryEditView.getTitleName());
+            preparedStatement.setLong(5, libraryEditView.getPublicationYear());
+            preparedStatement.setString(6, libraryEditView.getAuthor());
+            preparedStatement.setString(7, libraryEditView.getTitleName());
+            System.out.println(preparedStatement);
+            connection.setAutoCommit(false);
+
+
+            try {
+                int affectedRows = preparedStatement.executeUpdate();
+
+                try (PreparedStatement ps = connection.prepareStatement(checkIfExists)) {
+                    ps.setString(1, libraryEditView.getTitleName());
+
+                    if (affectedRows == 0) {
+                        throw new DataAccessException("Creating book failed, no rows affected.");
+                    }
+
+                    ps.execute();
+                } catch (SQLException e) {
+                    throw new DataAccessException("This is already added." + e);
+                }
+
+                System.out.println(connection);
+                connection.commit();
+
+            } catch (SQLException e) {
+                System.out.println("ahoj" + e);
+                connection.rollback();
+
+            } finally {
+                connection.setAutoCommit(true);
+            }
+        } catch (SQLException e) {
+            throw new DataAccessException("Creating book failed operation on the database failed." + e);
+        }
+
+
+
+        /**try (Connection connection = DataSourceConfig.getConnection();
 
              PreparedStatement preparedStatement = connection.prepareStatement(insertAuthorSQL, Statement.RETURN_GENERATED_KEYS)) {
             System.out.println(preparedStatement);
             // set prepared statement variables
             preparedStatement.setString(1, libraryEditView.getAuthor());
-            preparedStatement.setLong(2, libraryEditView.getBorn());
+            preparedStatement.setString(2, libraryEditView.getGivenName());
+            preparedStatement.setLong(3, libraryEditView.getBorn());
             int affectedRows = preparedStatement.executeUpdate();
 
 
@@ -141,7 +184,11 @@ public class LibraryRepository {
         } catch (SQLException e) {
             throw new DataAccessException("Creating book failed operation on the database failed."+ e);
         }
+
+
+         */
     }
+
 
 
     public List<LibraryDetailView> getPersonsDetailView() {
@@ -199,6 +246,38 @@ public class LibraryRepository {
         }
 
 
+    }
+
+    public List<LibraryFilterView> getBookFilterView(String text) {
+        System.out.println(text);
+        String filter = '%'+text+'%';
+        try (Connection connection = DataSourceConfig.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(
+                     "SELECT title_id, title_name, publication_year, availability_present, availability_absent  FROM bds.title " +
+                             "WHERE lower(title_name) like lower(?); "
+             )
+        ) {
+            preparedStatement.setString(1,filter);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            List<org.but.feec.library.api.LibraryFilterView> libraryFilterView = new ArrayList<>();
+            while (resultSet.next()) {
+                libraryFilterView.add(mapToBookFilterView(resultSet));
+            }
+            return libraryFilterView;
+        }
+        catch (SQLException e) {
+            throw new DataAccessException("Library filter view could not be loaded." + e);
+        }
+    }
+
+    private LibraryFilterView mapToBookFilterView(ResultSet rs) throws SQLException{
+        LibraryFilterView libraryFilterView = new LibraryFilterView();
+        libraryFilterView.setTitleId(rs.getLong("title_id"));
+        libraryFilterView.setTitleName(rs.getString("title_name"));
+        libraryFilterView.setPublicationYear(rs.getLong("publication_year"));
+        libraryFilterView.setAvailabilityPresent(rs.getLong("availability_present"));
+        libraryFilterView.setAvailabilityAbsent(rs.getLong("availability_absent"));
+        return libraryFilterView;
     }
 }
 

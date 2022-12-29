@@ -44,7 +44,9 @@ public class LibraryUpdateController {
 
     public Stage stage;
 
-
+    public void setStage(Stage stage) {
+        this.stage = stage;
+    }
 
     @FXML
     public void initialize(){
@@ -61,11 +63,12 @@ public class LibraryUpdateController {
 
         loadPersonsData();
 
-        logger.info("PersonsEditController initialized");
+        logger.info("LibraryUpdateController initialized");
 
     }
 
     private void loadPersonsData() {
+        this.stage = new Stage();
         Stage stage = this.stage;
         if (stage.getUserData() instanceof LibraryUpdateView) {
             LibraryUpdateView libraryUpdateView = (LibraryUpdateView) stage.getUserData();

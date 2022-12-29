@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <center>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #080b0f;" BorderPane.alignment="CENTER">
+         <children>
+            <TableView fx:id="tableViewFilter" layoutY="187.0" prefHeight="200.0" prefWidth="644.0">
+              <columns>
+                <TableColumn fx:id="titleIdColumn" prefWidth="141.0" text="title id" />
+                <TableColumn fx:id="titleNameColumn" prefWidth="130.0" text="tittle name" />
+                  <TableColumn fx:id="publicationYearColumn" prefWidth="126.0" text="publication year" />
+                  <TableColumn fx:id="availabilityPresentColumn" prefWidth="125.0" text="availability present" />
+                  <TableColumn fx:id="availabilityAbsentColumn" prefWidth="127.0" text="availability absent" />
+              </columns>
+            </TableView>
+            <Label layoutX="32.0" layoutY="79.0" prefHeight="25.0" prefWidth="272.0" text="Welcome, here is your filter " textFill="#72cf9f">
+               <font>
+                  <Font name="Comic Sans MS" size="18.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="405.0" fitWidth="251.0" layoutX="640.0" layoutY="68.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/Duck.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>

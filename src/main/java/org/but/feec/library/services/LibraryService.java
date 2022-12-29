@@ -44,6 +44,10 @@ public class LibraryService {
     public void libraryUpdate(LibraryUpdateView libraryUpdateView) {
         libraryRepository.libraryUpdate(libraryUpdateView);
     }
+
+    public List<LibraryFilterView> getBookFilterView(String text) {
+        return libraryRepository.getBookFilterView(text);
+    }
 }
 
 

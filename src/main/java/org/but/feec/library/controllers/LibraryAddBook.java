@@ -19,6 +19,9 @@ import org.controlsfx.validation.Validator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOError;
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.Optional;
 
@@ -73,42 +76,25 @@ public class LibraryAddBook {
     }
 
 
-    public void handleOnEditButton(ActionEvent actionEvent) {
+    public void handleOnEditButton(ActionEvent actionEvent) throws IOError{
         String author = String.valueOf(enterAuthor.getText());
         String givenName = String.valueOf(enterGivenName.getText());
         Long born = Long.valueOf(enterBorn.getText());
         String titleName = String.valueOf(enterTitleName.getText());
         Long publicationYear = Long.valueOf(enterPublicationYear.getText());
+            LibraryEditView libraryEditView = new LibraryEditView();
+            libraryEditView.setAuthor(author);
+            libraryEditView.setGivenName(givenName);
+            libraryEditView.setBorn(born);
+            libraryEditView.setTitleName(titleName);
+            libraryEditView.setPublicationYear(publicationYear);
+
+            libraryService.addBook(libraryEditView);
 
 
-        LibraryEditView libraryEditView = new LibraryEditView();
-        libraryEditView.setAuthor(author);
-        libraryEditView.setGivenName(givenName);
-        libraryEditView.setBorn(born);
-        libraryEditView.setTitleName(titleName);
-        libraryEditView.setPublicationYear(publicationYear);
-
-        libraryService.addBook(libraryEditView);
-
-        bookAdded();
-    }
-    private void bookAdded() {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Book Added");
-        alert.setHeaderText("Book successfully added.");
-
-        Timeline idlestage = new Timeline(new KeyFrame(Duration.seconds(2), new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                alert.setResult(ButtonType.CANCEL);
-                alert.hide();
-            }
-        }));
-        idlestage.setCycleCount(1);
-        idlestage.play();
-        Optional<ButtonType> result = alert.showAndWait();
     }
 }
+
 
 
 
