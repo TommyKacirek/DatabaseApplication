@@ -1,5 +1,7 @@
 package org.but.feec.library.controllers;
 
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import org.but.feec.library.App;
 import org.but.feec.library.data.LibraryRepository;
 import org.but.feec.library.exceptions.DataAccessException;
@@ -23,30 +25,32 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.util.Optional;
 
-public class LoginController {
+public class loginController {
 
-    private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
+    private static final Logger logger = LoggerFactory.getLogger(loginController.class);
 
-
-    @FXML
-    public Label LabelUsername;
 
     @FXML
-    public Label LabelPassword;
+    public Label labelUsername;
 
     @FXML
-    public Label LabelWelcome;
+    public Label labelPassword;
 
     @FXML
-    private TextField EnterUsername;
+    public Label labelWelcome;
 
     @FXML
-    private PasswordField EnterPassword;
+    private TextField enterUsername;
 
     @FXML
-    private Button LogButton;
+    private PasswordField enterPassword;
+
+    @FXML
+    private Button logButton;
 
 
 
@@ -54,18 +58,18 @@ public class LoginController {
         private AuthService authService;
         private ValidationSupport validation;
 
-    public LoginController() {
+    public loginController() {
 
         }
 
         @FXML
         private void initialize() {
-            EnterUsername.setOnKeyPressed(event -> {
+            enterUsername.setOnKeyPressed(event -> {
                 if (event.getCode() == KeyCode.ENTER) {
                     handleSignIn();
                 }
             });
-            EnterPassword.setOnKeyPressed(event -> {
+            enterPassword.setOnKeyPressed(event -> {
                 if (event.getCode() == KeyCode.ENTER) {
                     handleSignIn();
                 }
@@ -75,14 +79,16 @@ public class LoginController {
             initializeServices();
             initializeValidations();
 
+
             logger.info("LoginController initialized");
+
         }
 
         private void initializeValidations() {
             validation = new ValidationSupport();
-            validation.registerValidator(EnterUsername, Validator.createEmptyValidator("The username must not be empty."));
-            validation.registerValidator(EnterPassword, Validator.createEmptyValidator("The password must not be empty."));
-            LogButton.disableProperty().bind(validation.invalidProperty());
+            validation.registerValidator(enterUsername, Validator.createEmptyValidator("The username must not be empty."));
+            validation.registerValidator(enterPassword, Validator.createEmptyValidator("The password must not be empty."));
+            logButton.disableProperty().bind(validation.invalidProperty());
         }
 
         private void initializeServices() {
@@ -97,8 +103,8 @@ public class LoginController {
         }
 
     private void handleSignIn() {
-        String username = EnterUsername.getText();
-        String password = EnterPassword.getText();
+        String username = enterUsername.getText();
+        String password = enterPassword.getText();
         try {
             boolean authenticated = authService.authenticate(username, password);
             System.out.println("try block");
@@ -114,6 +120,10 @@ public class LoginController {
         } catch (ResourceNotFoundException | DataAccessException e) {
             System.out.println("HandleSignIn Catch:" + e);
             showInvalidPasswordDialog();
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        } catch (InvalidKeySpecException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -124,9 +134,10 @@ public class LoginController {
                 Scene scene = new Scene(fxmlLoader.load(), 900, 600);
                 Stage stage = new Stage();
                 stage.setTitle("Samurai Duck Library");
+                stage.getIcons().add(new Image(App.class.getResourceAsStream("images/duck_48px.png")));
                 stage.setScene(scene);
 
-                Stage stageOld = (Stage) LogButton.getScene().getWindow();
+                Stage stageOld = (Stage) logButton.getScene().getWindow();
                 stageOld.close();
 
 
@@ -175,6 +186,10 @@ public class LoginController {
         public void handleOnEnterActionPassword(ActionEvent dragEvent) {
             handleSignIn();
         }
+
+
+
+
 }
 
 

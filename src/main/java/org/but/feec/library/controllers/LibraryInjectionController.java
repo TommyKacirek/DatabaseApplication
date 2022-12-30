@@ -4,24 +4,17 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import org.but.feec.library.App;
-import org.but.feec.library.api.LibraryFilterView;
 import org.but.feec.library.api.LibraryInjectionView;
 import org.but.feec.library.data.LibraryRepository;
-import org.but.feec.library.exceptions.ExceptionHandler;
 import org.but.feec.library.services.LibraryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.w3c.dom.Text;
 
-import java.io.IOException;
 import java.util.List;
 
 public class LibraryInjectionController {
@@ -67,7 +60,7 @@ public class LibraryInjectionController {
         logger.info("LibraryInjectionController initialized");
 
     }
-    private ObservableList<LibraryInjectionView> initializePersonsData() {
+    private ObservableList<LibraryInjectionView> initializeLibraryData() {
 
         String text = enterSearchBar.getText();
         List<LibraryInjectionView> injection = libraryService.getInjectionView(text);
@@ -76,8 +69,8 @@ public class LibraryInjectionController {
     @FXML
     public void handleInjectionButton(ActionEvent actionEvent){
 
-            ObservableList<LibraryInjectionView> observablePersonList = initializePersonsData();
-            injectionViewTable.setItems(observablePersonList);
+            ObservableList<LibraryInjectionView> observableLibraryList = initializeLibraryData();
+            injectionViewTable.setItems(observableLibraryList);
 
     }
 }

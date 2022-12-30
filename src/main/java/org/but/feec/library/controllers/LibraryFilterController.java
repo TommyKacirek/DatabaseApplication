@@ -57,12 +57,12 @@ public class LibraryFilterController {
         availabilityAbsentColumn.setCellValueFactory(new PropertyValueFactory<LibraryFilterController, String>("availabilityAbsent"));
 
 
-    ObservableList<LibraryFilterView> observablePersonList = initializePersonsData();
-        tableViewFilter.setItems(observablePersonList);
+    ObservableList<LibraryFilterView> observableLibraryList = initializeLibraryData();
+        tableViewFilter.setItems(observableLibraryList);
         logger.info("LibraryFilterController initialized");
 
 }
-    private ObservableList<LibraryFilterView> initializePersonsData() {
+    private ObservableList<LibraryFilterView> initializeLibraryData() {
 
         String text = (String) stage.getUserData();
         System.out.println("controller "+text);

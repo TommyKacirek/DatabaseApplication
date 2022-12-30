@@ -5,12 +5,15 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" >
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <center>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #080b0f;" BorderPane.alignment="CENTER">
          <children>
             <TableView fx:id="injectionViewTable" layoutX="147.0" layoutY="156.0" prefHeight="200.0" prefWidth="349.0">
               <columns>
@@ -19,9 +22,17 @@
                   <TableColumn fx:id="usernameColumn" prefWidth="75.0" text="username" />
               </columns>
             </TableView>
-            <TextField fx:id="enterSearchBar" layoutX="269.0" layoutY="100.0" />
-            <Label layoutX="188.0" layoutY="104.0" text="Label" />
-            <Button fx:id="injectionButton" layoutX="424.0" layoutY="411.0" mnemonicParsing="false" onAction="#handleInjectionButton" text="Button" />
+            <TextField fx:id="enterSearchBar" layoutX="269.0" layoutY="100.0" promptText="Enter text" />
+            <Label layoutX="186.0" layoutY="104.0" prefHeight="17.0" prefWidth="76.0" text="Try injection" textFill="#72cf9f">
+               <font>
+                  <Font name="Comic Sans MS" size="12.0" />
+               </font></Label>
+            <Button fx:id="injectionButton" layoutX="433.0" layoutY="391.0" mnemonicParsing="false" onAction="#handleInjectionButton" style="-fx-background-color: #282828;" text="Try it" textFill="#72cf9f" />
+            <ImageView fitHeight="417.0" fitWidth="261.0" layoutX="592.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/Duck.png" />
+               </image>
+            </ImageView>
          </children>
       </AnchorPane>
    </center>

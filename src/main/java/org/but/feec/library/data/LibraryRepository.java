@@ -1,7 +1,6 @@
 package org.but.feec.library.data;
 
 
-import javafx.scene.chart.PieChart;
 import org.but.feec.library.api.*;
 import org.but.feec.library.config.DataSourceConfig;
 import org.but.feec.library.exceptions.DataAccessException;
@@ -24,7 +23,7 @@ public class LibraryRepository {
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
                     System.out.println("findPersonByEmail if block");
-                    return mapToPersonAuth(resultSet);
+                    return mapToLibraryAuth(resultSet);
                 }
             }
         } catch (SQLException e) {
@@ -35,7 +34,7 @@ public class LibraryRepository {
     }
 
     //DetailedView
-    public List<LibraryBasicView> getPersonsBasicView() {
+    public List<LibraryBasicView> getLibraryBasicView() {
         try (Connection connection = DataSourceConfig.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(
                      "SELECT title_id, title_name, publication_year, availability_present, availability_absent"+
@@ -47,17 +46,17 @@ public class LibraryRepository {
              ResultSet resultSet = preparedStatement.executeQuery();) {
             List<LibraryBasicView> libraryBasicViews = new ArrayList<>();
             while (resultSet.next()) {
-                libraryBasicViews.add(mapToPersonBasicView(resultSet));
+                libraryBasicViews.add(mapToLibraryBasicView(resultSet));
             }
             return libraryBasicViews;
         } catch (SQLException e) {
-            throw new DataAccessException("Persons basic view could not be loaded.", e);
+            throw new DataAccessException("Library basic view could not be loaded.", e);
         }
     }
 
 
 
-    private LibraryAuthView mapToPersonAuth(ResultSet rs) throws SQLException {
+    private LibraryAuthView mapToLibraryAuth(ResultSet rs) throws SQLException {
         LibraryAuthView person = new LibraryAuthView();
         person.setEmail(rs.getString("login_email"));
         person.setPassword(rs.getString("passwd_hash"));
@@ -66,7 +65,7 @@ public class LibraryRepository {
 
 
 
-    private LibraryBasicView mapToPersonBasicView(ResultSet rs) throws SQLException {
+    private LibraryBasicView mapToLibraryBasicView(ResultSet rs) throws SQLException {
         LibraryBasicView libraryBasicView = new LibraryBasicView();
         libraryBasicView.setTitleId(rs.getLong("title_id"));
         libraryBasicView.setTitleName(rs.getString("title_name"));
@@ -81,10 +80,11 @@ public class LibraryRepository {
     public void addBook(LibraryEditView libraryEditView) {
         String insertAuthorSQL = "INSERT INTO bds.author (given_name,family_name,born) VALUES (?,?,?); " +
                                  "INSERT INTO bds.title (title_name,publication_year,availability_present,availability_absent) VALUES (?,?,0,0); " +
-                                 "INSERT INTO bds.author_has_title(author_author_id,title_title_id) VALUES ((SELECT author_id FROM bds.author WHERE given_name = ?), " +
-                                 "(SELECT title_id FROM bds.title WHERE title_name=?));";
+                                 "INSERT INTO bds.author_has_title(author_author_id,title_title_id) VALUES ((SELECT author_id FROM bds.author WHERE given_name = ? AND family_name = ? ), " +
+                                 "(SELECT title_id FROM bds.title WHERE title_name=? ));";
 
         String checkIfExists = "SELECT title_name FROM bds.title WHERE title_name= ?";
+        System.out.println(libraryEditView);
 
         try (Connection connection = DataSourceConfig.getConnection();
              // would be beneficial if I will return the created entity back
@@ -96,7 +96,8 @@ public class LibraryRepository {
             preparedStatement.setString(4, libraryEditView.getTitleName());
             preparedStatement.setLong(5, libraryEditView.getPublicationYear());
             preparedStatement.setString(6, libraryEditView.getAuthor());
-            preparedStatement.setString(7, libraryEditView.getTitleName());
+            preparedStatement.setString(7, libraryEditView.getGivenName());
+            preparedStatement.setString(8, libraryEditView.getTitleName());
             System.out.println(preparedStatement);
             connection.setAutoCommit(false);
 
@@ -132,66 +133,12 @@ public class LibraryRepository {
 
 
 
-        /**try (Connection connection = DataSourceConfig.getConnection();
 
-             PreparedStatement preparedStatement = connection.prepareStatement(insertAuthorSQL, Statement.RETURN_GENERATED_KEYS)) {
-            System.out.println(preparedStatement);
-            // set prepared statement variables
-            preparedStatement.setString(1, libraryEditView.getAuthor());
-            preparedStatement.setString(2, libraryEditView.getGivenName());
-            preparedStatement.setLong(3, libraryEditView.getBorn());
-            int affectedRows = preparedStatement.executeUpdate();
-
-
-
-            if (affectedRows == 0) {
-                throw new DataAccessException("Creating book failed, no rows affected.");
-            }
-        } catch (SQLException e) {
-            throw new DataAccessException("Creating book failed operation on the database failed." + e);
-        }
-
-        try (Connection connection = DataSourceConfig.getConnection();
-
-             PreparedStatement preparedStatement = connection.prepareStatement(insertTitleSQL, Statement.RETURN_GENERATED_KEYS)) {
-            System.out.println(preparedStatement);
-            // set prepared statement variables
-            preparedStatement.setString(1, libraryEditView.getTitleName());
-            preparedStatement.setLong(2, libraryEditView.getPublicationYear());
-            int affectedRows = preparedStatement.executeUpdate();
-
-
-
-            if (affectedRows == 0) {
-                throw new DataAccessException("Creating book failed, no rows affected.");
-            }
-        } catch (SQLException e) {
-            throw new DataAccessException("Creating book failed operation on the database failed." + e);
-        }
-        try (Connection connection = DataSourceConfig.getConnection();
-             // would be beneficial if I will return the created entity back
-             PreparedStatement preparedStatement = connection.prepareStatement(insertConnectionSQL, Statement.RETURN_GENERATED_KEYS)) {
-            System.out.println();
-            System.out.println(preparedStatement);
-            // set prepared statement variables
-            preparedStatement.setString(1,   libraryEditView.getAuthor());
-            preparedStatement.setString(2, libraryEditView.getTitleName());
-            int affectedRows = preparedStatement.executeUpdate();
-
-            if (affectedRows == 0) {
-                throw new DataAccessException("Creating book failed, no rows affected.");
-            }
-        } catch (SQLException e) {
-            throw new DataAccessException("Creating book failed operation on the database failed."+ e);
-        }
-
-
-         */
     }
 
 
 
-    public List<LibraryDetailView> getPersonsDetailView() {
+    public List<LibraryDetailView> getLibraryDetailView() {
         try (Connection connection = DataSourceConfig.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(
                      "SELECT given_name, title_name, copy_id, genre, type, name"+
@@ -210,7 +157,7 @@ public class LibraryRepository {
              ResultSet resultSet = preparedStatement.executeQuery();) {
             List<LibraryDetailView> libraryDetailViews = new ArrayList<>();
             while (resultSet.next()) {
-                libraryDetailViews.add(mapToPersonDetailView(resultSet));
+                libraryDetailViews.add(mapToLibraryDetailView(resultSet));
             }
             return libraryDetailViews;
         } catch (SQLException e) {
@@ -218,7 +165,7 @@ public class LibraryRepository {
         }
     }
 
-    private LibraryDetailView mapToPersonDetailView(ResultSet rs) throws SQLException {
+    private LibraryDetailView mapToLibraryDetailView(ResultSet rs) throws SQLException {
         LibraryDetailView libraryDetailViews = new LibraryDetailView();
         libraryDetailViews.setGivenNameColumn(rs.getString("given_name"));
         libraryDetailViews.setTitleNameColumn(rs.getString("title_name"));
@@ -230,17 +177,20 @@ public class LibraryRepository {
     }
 
     public void libraryUpdate(LibraryUpdateView libraryUpdateView) {
-        String insertPersonSQL = "UPDATE bds.title  SET title_name = ?, publication_year = ?, availability_present = ?, availability_absent = ? WHERE title_id = ?";
+        String insertLibrarySQL = "UPDATE bds.title  SET title_name = ?, publication_year = ?, availability_present = ?, availability_absent = ? WHERE title_id = ?";
+
+        System.out.println(libraryUpdateView.getEnterTitleId());
 
         try (Connection connection = DataSourceConfig.getConnection();
 
-             PreparedStatement preparedStatement = connection.prepareStatement(insertPersonSQL)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(insertLibrarySQL)) {
 
             preparedStatement.setString(1, libraryUpdateView.getEnterTitleName());
             preparedStatement.setLong(2, libraryUpdateView.getEnterPublicationYear());
             preparedStatement.setLong(3, libraryUpdateView.getEnterAvailabilityPresent());
             preparedStatement.setLong(4, libraryUpdateView.getGetEnterAvailabilityAbsent());
             preparedStatement.setLong(5,libraryUpdateView.getEnterTitleId());
+            preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
             throw new DataAccessException("Creating person failed operation on the database failed." + e );

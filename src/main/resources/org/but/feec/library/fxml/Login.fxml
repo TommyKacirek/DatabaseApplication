@@ -10,20 +10,20 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.but.feec.library.controllers.LoginController">
+<BorderPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.but.feec.library.controllers.loginController">
     <center>
         <AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #080b0f;" BorderPane.alignment="CENTER">
             <children>
-                <TextField fx:id="EnterUsername" layoutX="215.0" layoutY="166.0" promptText="Enter your username" style="-fx-text-fill: #72cf9f;">
+                <TextField fx:id="enterUsername" layoutX="215.0" layoutY="166.0" promptText="Enter your username" style="-fx-text-fill: #72cf9f;">
                     <font>
                         <Font name="Comic Sans MS" size="12.0" />
                     </font></TextField>
-                <Label fx:id="LabelUsername" layoutX="215.0" layoutY="147.0" text="Username" textFill="#72cf9f">
+                <Label fx:id="labelUsername" layoutX="215.0" layoutY="147.0" text="Username" textFill="#72cf9f">
                     <font>
                         <Font name="Comic Sans MS" size="12.0" />
                     </font>
                 </Label>
-                <Label fx:id="LabelPassword" layoutX="215.0" layoutY="202.0" text="Password" textFill="#72cf9f">
+                <Label fx:id="labelPassword" layoutX="215.0" layoutY="202.0" text="Password" textFill="#72cf9f">
                     <font>
                         <Font name="Comic Sans MS" size="12.0" />
                     </font>
@@ -38,12 +38,12 @@
                         <Image url="@../images/password_24px.png" />
                     </image>
                 </ImageView>
-                <Button fx:id="LogButton" layoutX="336.0" layoutY="254.0" mnemonicParsing="false" style="-fx-background-color: #282828;" onAction="#signInActionHandler" text="Log in" textFill="#72cf9f">
+                <Button fx:id="logButton" layoutX="336.0" layoutY="254.0" mnemonicParsing="false" style="-fx-background-color: #282828;" onAction="#signInActionHandler" text="Log in" textFill="#72cf9f">
                     <font>
                         <Font name="Comic Sans MS" size="12.0" />
                     </font>
                 </Button>
-                <PasswordField fx:id="EnterPassword" layoutX="215.0" layoutY="221.0" prefHeight="25.0" prefWidth="166.0" promptText="Enter your password" style="-fx-text-fill: #72cf9f;">
+                <PasswordField fx:id="enterPassword" layoutX="215.0" layoutY="221.0" prefHeight="25.0" prefWidth="166.0" promptText="Enter your password" style="-fx-text-fill: #72cf9f;">
                     <font>
                         <Font name="Comic Sans MS" size="12.0" />
                     </font>
@@ -53,7 +53,7 @@
                         <Image url="@../images/Duck.png" />
                     </image>
                 </ImageView>
-                <Label fx:id="LabelWelcome" layoutX="187.0" layoutY="83.0" prefHeight="43.0" prefWidth="244.0" text="Welcome to Samurai Duck Library" textFill="#72cf9f">
+                <Label fx:id="labelWelcome" layoutX="187.0" layoutY="83.0" prefHeight="43.0" prefWidth="244.0" text="Welcome to Samurai Duck Library" textFill="#72cf9f">
                     <font>
                         <Font name="Comic Sans MS" size="14.0" />
                     </font>

@@ -18,7 +18,7 @@ import java.io.IOError;
 public class LibraryAddBookController {
     private static final Logger logger = LoggerFactory.getLogger(LibraryAddBookController.class);
     @FXML
-    public Button ApplyEditButton;
+    public Button applyAddButton;
 
     @FXML
     public TextField enterAuthor;
@@ -43,9 +43,8 @@ public class LibraryAddBookController {
 
     public Stage stage;
 
-    public void setStage(Stage stage){
-        this.stage = stage;
-    }
+
+
 
     @FXML
     public void initialize() {
@@ -60,24 +59,25 @@ public class LibraryAddBookController {
         validation.registerValidator(enterPublicationYear, Validator.createEmptyValidator("The publication year  must not be empty."));
 
 
-        ApplyEditButton.disableProperty().bind(validation.invalidProperty());
+        applyAddButton.disableProperty().bind(validation.invalidProperty());
 
-        logger.info("PersonCreateController initialized");
+        logger.info("LibraryAddBookController initialized");
     }
 
 
-    public void handleOnEditButton(ActionEvent actionEvent) throws IOError{
+    public void handleoOnAddBookButton(ActionEvent actionEvent) throws IOError{
         String author = String.valueOf(enterAuthor.getText());
         String givenName = String.valueOf(enterGivenName.getText());
         Long born = Long.valueOf(enterBorn.getText());
         String titleName = String.valueOf(enterTitleName.getText());
         Long publicationYear = Long.valueOf(enterPublicationYear.getText());
-            LibraryEditView libraryEditView = new LibraryEditView();
-            libraryEditView.setAuthor(author);
-            libraryEditView.setGivenName(givenName);
-            libraryEditView.setBorn(born);
-            libraryEditView.setTitleName(titleName);
-            libraryEditView.setPublicationYear(publicationYear);
+
+        LibraryEditView libraryEditView = new LibraryEditView();
+        libraryEditView.setAuthor(author);
+        libraryEditView.setGivenName(givenName);
+        libraryEditView.setBorn(born);
+        libraryEditView.setTitleName(titleName);
+        libraryEditView.setPublicationYear(publicationYear);
 
             libraryService.addBook(libraryEditView);
 

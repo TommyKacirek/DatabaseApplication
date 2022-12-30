@@ -26,6 +26,7 @@ public class App extends Application {
 
             primaryStage.setTitle("Samurai Duck Library");
             Scene scene = new Scene(mainStage);
+            primaryStage.getIcons().add(new Image(App.class.getResourceAsStream("images/duck_48px.png")));
             primaryStage.setScene(scene);
             primaryStage.show();
 

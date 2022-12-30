@@ -77,12 +77,6 @@
             <artifactId>HikariCP</artifactId>
             <version>5.0.1</version>
         </dependency>
-        <!-- for BCrypt -->
-        <dependency>
-            <groupId>at.favre.lib</groupId>
-            <artifactId>bcrypt</artifactId>
-            <version>0.9.0</version>
-        </dependency>
         <!-- Logging with SLF4J -->
         <dependency>
             <groupId>org.slf4j</groupId>

@@ -7,7 +7,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import org.but.feec.library.api.LibraryBasicView;
 import org.but.feec.library.api.LibraryDetailView;
 import org.but.feec.library.data.LibraryRepository;
 import org.but.feec.library.services.LibraryService;
@@ -60,19 +59,19 @@ public class LibraryDetailedView {
         borrowTypeColumn.setCellValueFactory(new PropertyValueFactory<LibraryDetailView, String>("borrowTypeColumn"));
         languageColumn.setCellValueFactory(new PropertyValueFactory<LibraryDetailView, String>("languageColumn"));
 
-        ObservableList<LibraryDetailView> observablePersonList = initializePersonsData();
-        detailedTableView.setItems(observablePersonList);
+        ObservableList<LibraryDetailView> observableLibraryList = initializeLibraryData();
+        detailedTableView.setItems(observableLibraryList);
 
         detailedTableView.getSortOrder().add(givenNameColumn);
 
-        logger.info("DetailView initialized");
+        logger.info("LibraryDetailedViewController initialized");
 
 
     }
 
-    private ObservableList<LibraryDetailView> initializePersonsData() {
-        List<LibraryDetailView> persons = libraryService.getPersonsDetailView();
-        return FXCollections.observableArrayList(persons);
+    private ObservableList<LibraryDetailView> initializeLibraryData() {
+        List<LibraryDetailView> detailView = libraryService.getPersonsDetailView();
+        return FXCollections.observableArrayList(detailView);
     }
 
 

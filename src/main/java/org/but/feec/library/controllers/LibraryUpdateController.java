@@ -16,13 +16,12 @@ import org.controlsfx.validation.ValidationSupport;
 import org.controlsfx.validation.Validator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.w3c.dom.Text;
+
 
 import java.util.Optional;
 
 public class LibraryUpdateController {
     private static final Logger logger = LoggerFactory.getLogger(LibraryUpdateController.class);
-
 
     @FXML
     public TextField enterTitleName;
@@ -42,6 +41,10 @@ public class LibraryUpdateController {
     private LibraryService libraryService;
     private LibraryRepository libraryRepository;
     private ValidationSupport validation;
+
+    public void setEnterTitleId(long enterTitleId) {
+        this.enterTitleId = enterTitleId;
+    }
 
     private long enterTitleId;
     public LibraryBasicView libraryBasicView;
@@ -66,19 +69,19 @@ public class LibraryUpdateController {
 
         updateButton.disableProperty().bind(validation.invalidProperty());
 
-        loadPersonsData();
+        loadLibraryData();
         logger.info("LibraryUpdateController initialized");
 
     }
 
 
 
-    private void loadPersonsData() {
+    private void loadLibraryData() {
         this.stage = new Stage();
         Stage stage = this.stage;
         if (stage.getUserData() instanceof LibraryBasicView) {
              libraryBasicView = (LibraryBasicView) stage.getUserData();
-            //enterTitleId = libraryBasicView.getTitleId();
+            enterTitleId = libraryBasicView.getTitleId();
             enterTitleName.setText(String.valueOf(libraryBasicView.getTitleName()));
             enterPublicationYear.setText(String.valueOf(libraryBasicView.getPublicationYear()));
             enterAvailabilityPresent.setText(String.valueOf(libraryBasicView.getAvailabilityPresent()));
@@ -89,7 +92,6 @@ public class LibraryUpdateController {
     }
     @FXML
     public void handleUpdateTitle(ActionEvent event){
-        Long enterTitleId = libraryBasicView.getTitleId();
         String titleName = String.valueOf(enterTitleName.getText());
         Long publicationYear = Long.valueOf(enterPublicationYear.getText());
         Long availabilityPresent = Long.valueOf(enterAvailabilityPresent.getText());
@@ -107,10 +109,10 @@ public class LibraryUpdateController {
 
         libraryService.libraryUpdate(libraryUpdateView);
 
-        personEditedConfirmationDialog();
+        updateDialog();
     }
 
-    private void personEditedConfirmationDialog() {
+    private void updateDialog() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Title updated ");
         alert.setHeaderText("Title was successfully updated.");

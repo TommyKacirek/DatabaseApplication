@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import org.but.feec.library.App;
 import org.but.feec.library.api.LibraryBasicView;
@@ -25,7 +26,7 @@ public class LibraryPageController {
 
     private static final Logger logger = LoggerFactory.getLogger(LibraryPageController.class);
     @FXML
-    private TableView <LibraryBasicView> LibraryTabelView;
+    private TableView <LibraryBasicView> libraryTabelView;
 
     @FXML
     private TableColumn <LibraryBasicView, String> titleId;
@@ -44,8 +45,7 @@ public class LibraryPageController {
 
 
 
-    @FXML
-    public TextField EnterBookTextField;
+
 
     @FXML
     private TextField searchBar;
@@ -53,16 +53,16 @@ public class LibraryPageController {
     @FXML
     public Button filterButton;
     @FXML
-    public Button DetailedViewButton;
+    public Button detailedViewButton;
 
     @FXML
-    public Button RefreshButton;
+    public Button refreshButton;
 
     @FXML
-    public Button AddBookButton;
+    public Button addBookButton;
 
     @FXML
-    public Button TrySQLInjectionButton;
+    public Button trySQLInjectionButton;
 
 
     private LibraryService libraryService;
@@ -79,10 +79,10 @@ public class LibraryPageController {
         availabilityPresent.setCellValueFactory(new PropertyValueFactory<LibraryBasicView, String>("availabilityPresent"));
         availabilityAbsent.setCellValueFactory(new PropertyValueFactory<LibraryBasicView, String>("availabilityAbsent"));
 
-        ObservableList<LibraryBasicView> observablePersonList = initializePersonsData();
-        LibraryTabelView.setItems(observablePersonList);
+        ObservableList<LibraryBasicView> observableLibraryList = initializeLibraryData();
+        libraryTabelView.setItems(observableLibraryList);
 
-        LibraryTabelView.getSortOrder().add(titleId);
+        libraryTabelView.getSortOrder().add(titleId);
 
         initializeTableViewSelection();
 
@@ -91,7 +91,7 @@ public class LibraryPageController {
 
     }
 
-    private ObservableList<LibraryBasicView> initializePersonsData() {
+    private ObservableList<LibraryBasicView> initializeLibraryData() {
         List<LibraryBasicView> persons = libraryService.getPersonsBasicView();
         return FXCollections.observableArrayList(persons);
     }
@@ -104,10 +104,11 @@ public class LibraryPageController {
             fxmlLoader.setLocation(App.class.getResource("fxml/LibraryAddBook.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), 900, 600);
             Stage stage = new Stage();
-            stage.setTitle("Samurai Duck Library Add Book");
+            stage.getIcons().add(new Image(App.class.getResourceAsStream("images/duck_48px.png")));
+            stage.setTitle("Samurai Duck Library Add Book View");
             stage.setScene(scene);
 
-            Stage stageOld = (Stage) AddBookButton.getScene().getWindow();
+            Stage stageOld = (Stage) addBookButton.getScene().getWindow();
 
             stage.show();
         } catch (IOException ex) {
@@ -116,10 +117,10 @@ public class LibraryPageController {
     }
 
     public void handleRefreshButton(ActionEvent actionEvent) {
-        ObservableList<LibraryBasicView> observablePersonsList = initializePersonsData();
-        LibraryTabelView.setItems(observablePersonsList);
-        LibraryTabelView.refresh();
-        LibraryTabelView.sort();
+        ObservableList<LibraryBasicView> observableLibraryList = initializeLibraryData();
+        libraryTabelView.setItems(observableLibraryList);
+        libraryTabelView.refresh();
+        libraryTabelView.sort();
     }
 
     @FXML
@@ -130,9 +131,10 @@ public class LibraryPageController {
             Scene scene = new Scene(fxmlLoader.load(), 900, 600);
             Stage stage = new Stage();
             stage.setTitle("Samurai Duck Library Detail View");
+            stage.getIcons().add(new Image(App.class.getResourceAsStream("images/duck_48px.png")));
             stage.setScene(scene);
 
-            Stage stageOld = (Stage) DetailedViewButton.getScene().getWindow();
+            Stage stageOld = (Stage) detailedViewButton.getScene().getWindow();
 
             stage.show();
         } catch (IOException ex) {
@@ -144,15 +146,17 @@ public class LibraryPageController {
         MenuItem update = new MenuItem("Update Book");
         MenuItem delete = new MenuItem("Delete");
         update.setOnAction((ActionEvent event) -> {
-            LibraryBasicView updateView = LibraryTabelView.getSelectionModel().getSelectedItem();
+            LibraryBasicView updateView = libraryTabelView.getSelectionModel().getSelectedItem();
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader();
                 fxmlLoader.setLocation(App.class.getResource("fxml/UpdateView.fxml"));
                 Stage stage = new Stage();
                 stage.setUserData(updateView);
-                stage.setTitle("Samurai Duck Library Update");
+                stage.setTitle("Samurai Duck Library Update View ");
 
                 LibraryUpdateController controller = new LibraryUpdateController();
+                controller.setEnterTitleId(updateView.getTitleId());
+
                 controller.setStage(stage);
                 fxmlLoader.setController(controller);
 
@@ -169,7 +173,7 @@ public class LibraryPageController {
 
 
         delete.setOnAction((ActionEvent event) -> {
-            LibraryBasicView bookView = LibraryTabelView.getSelectionModel().getSelectedItem();
+            LibraryBasicView bookView = libraryTabelView.getSelectionModel().getSelectedItem();
             long titleId = bookView.getTitleId();
             libraryRepository.removeBook(titleId);
         });
@@ -178,7 +182,7 @@ public class LibraryPageController {
         ContextMenu menu = new ContextMenu();
         menu.getItems().add(update);
         menu.getItems().add(delete);
-        LibraryTabelView.setContextMenu(menu);
+        libraryTabelView.setContextMenu(menu);
     }
 
     public void handleFilterButton(ActionEvent actionEvent){
@@ -194,8 +198,8 @@ public class LibraryPageController {
             fxmlLoader.setController(libraryFilterController);
             Scene scene = new Scene(fxmlLoader.load(), 900, 600);
 
-
-            stage.setTitle("Filtered view");
+            stage.getIcons().add(new Image(App.class.getResourceAsStream("images/duck_48px.png")));
+            stage.setTitle("Samurai Duck Library Filter view");
             stage.setScene(scene);
             stage.show();
 
@@ -216,6 +220,7 @@ public class LibraryPageController {
             Scene scene = new Scene(fxmlLoader.load(), 900, 600);
             //Stage stageOld = (Stage) TrySQLInjectionButton.getScene().getWindow();
 
+            stage.getIcons().add(new Image(App.class.getResourceAsStream("images/duck_48px.png")));
             stage.setTitle("Samurai Duck Library Injection View");
             stage.setScene(scene);
             stage.show();
