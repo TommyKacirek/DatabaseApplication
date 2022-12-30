@@ -1,7 +1,6 @@
 package org.but.feec.library.controllers;
 
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import org.but.feec.library.App;
 import org.but.feec.library.data.LibraryRepository;
 import org.but.feec.library.exceptions.DataAccessException;
@@ -29,9 +28,9 @@ import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.Optional;
 
-public class loginController {
+public class LoginController {
 
-    private static final Logger logger = LoggerFactory.getLogger(loginController.class);
+    private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
 
     @FXML
@@ -58,7 +57,7 @@ public class loginController {
         private AuthService authService;
         private ValidationSupport validation;
 
-    public loginController() {
+    public LoginController() {
 
         }
 
