@@ -151,6 +151,7 @@ public class LibraryPageController {
                 FXMLLoader fxmlLoader = new FXMLLoader();
                 fxmlLoader.setLocation(App.class.getResource("fxml/UpdateView.fxml"));
                 Stage stage = new Stage();
+                stage.getIcons().add(new Image(App.class.getResourceAsStream("images/duck_48px.png")));
                 stage.setUserData(updateView);
                 stage.setTitle("Samurai Duck Library Update View ");
 
