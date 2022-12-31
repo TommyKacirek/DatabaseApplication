@@ -25,7 +25,6 @@ public class DataSourceConfig {
 
     private DataSourceConfig() {
     }
-
     public static DataSource getDataSource() {
         return ds;
     }

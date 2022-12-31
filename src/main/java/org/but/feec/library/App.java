@@ -8,7 +8,6 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
-
 /**
  * @author Tomáš Kačírek
  */
@@ -23,7 +22,6 @@ public class App extends Application {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/Login.fxml"));
             BorderPane mainStage = loader.load();
-
             primaryStage.setTitle("Samurai Duck Library");
             Scene scene = new Scene(mainStage);
             primaryStage.getIcons().add(new Image(App.class.getResourceAsStream("images/duck_48px.png")));
@@ -34,7 +32,6 @@ public class App extends Application {
             ExceptionHandler.handleException(ex);
         }
     }
-
 }
 
 

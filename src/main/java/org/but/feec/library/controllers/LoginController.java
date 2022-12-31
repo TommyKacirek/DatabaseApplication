@@ -22,16 +22,12 @@ import org.controlsfx.validation.ValidationSupport;
 import org.controlsfx.validation.Validator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.Optional;
 
 public class LoginController {
-
-    private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
-
 
     @FXML
     public Label labelUsername;
@@ -51,16 +47,16 @@ public class LoginController {
     @FXML
     private Button logButton;
 
+    private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
+    private LibraryRepository libraryRepository;
 
-        private LibraryRepository libraryRepository;
-        private AuthService authService;
-        private ValidationSupport validation;
+    private AuthService authService;
+
+    private ValidationSupport validation;
 
     public LoginController() {
-
         }
-
         @FXML
         private void initialize() {
             enterUsername.setOnKeyPressed(event -> {
@@ -74,13 +70,10 @@ public class LoginController {
                 }
             });
 
-
             initializeServices();
             initializeValidations();
 
-
             logger.info("LoginController initialized");
-
         }
 
         private void initializeValidations() {
@@ -94,8 +87,6 @@ public class LoginController {
             libraryRepository = new LibraryRepository();
             authService = new AuthService(libraryRepository);
         }
-
-
 
         public void signInActionHandler(ActionEvent event) {
             handleSignIn();
@@ -139,8 +130,6 @@ public class LoginController {
                 Stage stageOld = (Stage) logButton.getScene().getWindow();
                 stageOld.close();
 
-
-
                 stage.show();
             } catch (IOException ex) {
                 ExceptionHandler.handleException(ex);
@@ -155,7 +144,6 @@ public class LoginController {
 
             alert.showAndWait();
         }
-
 
     private void authConfirmDialog() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -185,10 +173,6 @@ public class LoginController {
         public void handleOnEnterActionPassword(ActionEvent dragEvent) {
             handleSignIn();
         }
-
-
-
-
 }
 
 

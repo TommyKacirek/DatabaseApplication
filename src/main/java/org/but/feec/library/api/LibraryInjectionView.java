@@ -14,35 +14,35 @@ public class LibraryInjectionView {
         return idColumn.get();
     }
 
-    public LongProperty idColumnProperty() {
-        return idColumn;
-    }
-
-    public void setIdColumn(long idColumn) {
-        this.idColumn.set(idColumn);
-    }
-
     public String getNameColumn() {
         return nameColumn.get();
-    }
-
-    public StringProperty nameColumnProperty() {
-        return nameColumn;
-    }
-
-    public void setNameColumn(String nameColumn) {
-        this.nameColumn.set(nameColumn);
     }
 
     public String getUsernameColumn() {
         return usernameColumn.get();
     }
 
-    public StringProperty usernameColumnProperty() {
-        return usernameColumn;
+    public void setIdColumn(long idColumn) {
+        this.idColumn.set(idColumn);
+    }
+
+    public void setNameColumn(String nameColumn) {
+        this.nameColumn.set(nameColumn);
     }
 
     public void setUsernameColumn(String usernameColumn) {
         this.usernameColumn.set(usernameColumn);
+    }
+
+    public LongProperty idColumnProperty() {
+        return idColumn;
+    }
+
+    public StringProperty nameColumnProperty() {
+        return nameColumn;
+    }
+
+    public StringProperty usernameColumnProperty() {
+        return usernameColumn;
     }
 }

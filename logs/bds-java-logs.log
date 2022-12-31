@@ -15,3 +15,9 @@
 1383 [JavaFX Application Thread] INFO  o.b.f.l.controllers.LoginController - LoginController initialized
 7961 [JavaFX Application Thread] INFO  o.b.f.l.c.LibraryPageController - LibraryPageController initialized
 10310 [JavaFX Application Thread] INFO  o.b.f.l.c.LibraryAddBookController - LibraryAddBookController initialized
+1268 [JavaFX Application Thread] INFO  o.b.f.l.controllers.LoginController - LoginController initialized
+19414 [JavaFX Application Thread] INFO  o.b.f.l.c.LibraryPageController - LibraryPageController initialized
+24357 [JavaFX Application Thread] INFO  o.b.f.l.c.LibraryUpdateController - LibraryUpdateController initialized
+35376 [JavaFX Application Thread] INFO  o.b.f.l.c.LibraryPageController - LibraryDetailedViewController initialized
+38457 [JavaFX Application Thread] INFO  o.b.f.l.c.LibraryAddBookController - LibraryAddBookController initialized
+58983 [JavaFX Application Thread] INFO  o.b.f.l.c.LibraryInjectionController - LibraryInjectionController initialized

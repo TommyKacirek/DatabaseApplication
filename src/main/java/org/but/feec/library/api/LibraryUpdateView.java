@@ -17,61 +17,62 @@ public class LibraryUpdateView {
         return enterTitleId.get();
     }
 
-    public LongProperty enterTitleIdProperty() {
-        return enterTitleId;
-    }
-
-    public void setEnterTitleId(long enterTitleId) {
-        this.enterTitleId.set(enterTitleId);
-    }
-
     public String getEnterTitleName() {
         return enterTitleName.get();
-    }
-
-    public StringProperty enterTitleNameProperty() {
-        return enterTitleName;
-    }
-
-    public void setEnterTitleName(String enterTitleName) {
-        this.enterTitleName.set(enterTitleName);
     }
 
     public long getEnterPublicationYear() {
         return enterPublicationYear.get();
     }
 
-    public LongProperty enterPublicationYearProperty() {
-        return enterPublicationYear;
-    }
-
-    public void setEnterPublicationYear(long enterPublicationYear) {
-        this.enterPublicationYear.set(enterPublicationYear);
-    }
-
     public long getEnterAvailabilityPresent() {
         return enterAvailabilityPresent.get();
-    }
-
-    public LongProperty enterAvailabilityPresentProperty() {
-        return enterAvailabilityPresent;
-    }
-
-    public void setEnterAvailabilityPresent(long enterAvailabilityPresent) {
-        this.enterAvailabilityPresent.set(enterAvailabilityPresent);
     }
 
     public long getGetEnterAvailabilityAbsent() {
         return getEnterAvailabilityAbsent.get();
     }
 
-    public LongProperty getEnterAvailabilityAbsentProperty() {
-        return getEnterAvailabilityAbsent;
+    public void setEnterTitleId(long enterTitleId) {
+        this.enterTitleId.set(enterTitleId);
+    }
+
+    public void setEnterTitleName(String enterTitleName) {
+        this.enterTitleName.set(enterTitleName);
+    }
+
+    public void setEnterPublicationYear(long enterPublicationYear) {
+        this.enterPublicationYear.set(enterPublicationYear);
+    }
+
+    public void setEnterAvailabilityPresent(long enterAvailabilityPresent) {
+        this.enterAvailabilityPresent.set(enterAvailabilityPresent);
     }
 
     public void setGetEnterAvailabilityAbsent(long getEnterAvailabilityAbsent) {
         this.getEnterAvailabilityAbsent.set(getEnterAvailabilityAbsent);
     }
+
+    /**public LongProperty enterTitleIdProperty() {
+        return enterTitleId;
+    }
+
+    public StringProperty enterTitleNameProperty() {
+        return enterTitleName;
+    }
+
+    public LongProperty enterPublicationYearProperty() {
+        return enterPublicationYear;
+    }
+
+    public LongProperty enterAvailabilityPresentProperty() {
+        return enterAvailabilityPresent;
+    }
+
+    public LongProperty getEnterAvailabilityAbsentProperty() {
+        return getEnterAvailabilityAbsent;
+    }
+   */
     @Override
     public String toString() {
         return "PersonEditView{" +

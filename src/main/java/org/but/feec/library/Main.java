@@ -1,8 +1,6 @@
 package org.but.feec.library;
 
-
 import org.but.feec.library.config.DataSourceConfig;
-
 
 public class Main {
     public static void main(String[] args) {

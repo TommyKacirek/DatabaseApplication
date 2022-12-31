@@ -17,64 +17,59 @@ public class LibraryBasicView {
         return titleId.get();
     }
 
-    public LongProperty titleIdProperty() {
-        return titleId;
-    }
-
-    public void setTitleId(long titleId) {
-        this.titleId.set(titleId);
-    }
-
     public String getTitleName() {
         return titleName.get();
-    }
-
-    public StringProperty titleNameProperty() {
-        return titleName;
-    }
-
-    public void setTitleName(String titleName) {
-        this.titleName.set(titleName);
     }
 
     public long getPublicationYear() {
         return publicationYear.get();
     }
 
-    public LongProperty publicationYearProperty() {
-        return publicationYear;
-    }
-
-    public void setPublicationYear(long publicationYear) {
-        this.publicationYear.set(publicationYear);
-    }
-
     public long getAvailabilityPresent() {
         return availabilityPresent.get();
-    }
-
-    public LongProperty availabilityPresentProperty() {
-        return availabilityPresent;
-    }
-
-    public void setAvailabilityPresent(long availabilityPresent) {
-        this.availabilityPresent.set(availabilityPresent);
     }
 
     public long getAvailabilityAbsent() {
         return availabilityAbsent.get();
     }
 
-    public LongProperty availabilityAbsentProperty() {
-        return availabilityAbsent;
+    public void setTitleId(long titleId) {
+        this.titleId.set(titleId);
+    }
+
+    public void setTitleName(String titleName) {
+        this.titleName.set(titleName);
+    }
+
+    public void setPublicationYear(long publicationYear) {
+        this.publicationYear.set(publicationYear);
+    }
+
+    public void setAvailabilityPresent(long availabilityPresent) {
+        this.availabilityPresent.set(availabilityPresent);
     }
 
     public void setAvailabilityAbsent(long availabilityAbsent) {
         this.availabilityAbsent.set(availabilityAbsent);
     }
 
+    public LongProperty titleIdProperty() {
+        return titleId;
+    }
 
+    public StringProperty titleNameProperty() {
+        return titleName;
+    }
 
+    public LongProperty publicationYearProperty() {
+        return publicationYear;
+    }
 
+    public LongProperty availabilityPresentProperty() {
+        return availabilityPresent;
+    }
 
+    public LongProperty availabilityAbsentProperty() {
+        return availabilityAbsent;
+    }
 }

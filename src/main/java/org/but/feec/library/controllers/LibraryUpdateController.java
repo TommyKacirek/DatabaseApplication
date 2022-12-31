@@ -21,7 +21,6 @@ import org.slf4j.LoggerFactory;
 import java.util.Optional;
 
 public class LibraryUpdateController {
-    private static final Logger logger = LoggerFactory.getLogger(LibraryUpdateController.class);
 
     @FXML
     public TextField enterTitleName;
@@ -38,16 +37,22 @@ public class LibraryUpdateController {
     @FXML
     public Button updateButton;
 
-    private LibraryService libraryService;
-    private LibraryRepository libraryRepository;
-    private ValidationSupport validation;
-
     public void setEnterTitleId(long enterTitleId) {
         this.enterTitleId = enterTitleId;
     }
 
+    private static final Logger logger = LoggerFactory.getLogger(LibraryUpdateController.class);
+
+    private LibraryService libraryService;
+
+    private LibraryRepository libraryRepository;
+
+    private ValidationSupport validation;
+
     private long enterTitleId;
+
     public LibraryBasicView libraryBasicView;
+
     public Stage stage;
 
     public void setStage(Stage stage) {
@@ -74,8 +79,6 @@ public class LibraryUpdateController {
 
     }
 
-
-
     private void loadLibraryData() {
         this.stage = new Stage();
         Stage stage = this.stage;
@@ -87,8 +90,6 @@ public class LibraryUpdateController {
             enterAvailabilityPresent.setText(String.valueOf(libraryBasicView.getAvailabilityPresent()));
             enterAvailabilityAbsent.setText(String.valueOf(libraryBasicView.getAvailabilityAbsent()));
         }
-
-
     }
     @FXML
     public void handleUpdateTitle(ActionEvent event){
@@ -97,15 +98,12 @@ public class LibraryUpdateController {
         Long availabilityPresent = Long.valueOf(enterAvailabilityPresent.getText());
         Long availabilityAbsent = Long.valueOf(enterAvailabilityAbsent.getText());
 
-
-
         LibraryUpdateView libraryUpdateView = new LibraryUpdateView();
         libraryUpdateView.setEnterTitleId(enterTitleId);
         libraryUpdateView.setEnterTitleName(titleName);
         libraryUpdateView.setEnterPublicationYear(publicationYear);
         libraryUpdateView.setEnterAvailabilityPresent(availabilityPresent);
         libraryUpdateView.setGetEnterAvailabilityAbsent(availabilityAbsent);
-
 
         libraryService.libraryUpdate(libraryUpdateView);
 
@@ -128,7 +126,6 @@ public class LibraryUpdateController {
         idlestage.play();
         Optional<ButtonType> result = alert.showAndWait();
     }
-
 }
 
 

@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 import java.io.IOError;
 
 public class LibraryAddBookController {
-    private static final Logger logger = LoggerFactory.getLogger(LibraryAddBookController.class);
+
     @FXML
     public Button applyAddButton;
 
@@ -35,16 +35,15 @@ public class LibraryAddBookController {
     @FXML
     public TextField enterPublicationYear;
 
-
+    private static final Logger logger = LoggerFactory.getLogger(LibraryAddBookController.class);
 
     private LibraryService libraryService;
+
     private LibraryRepository libraryRepository;
+
     private ValidationSupport validation;
 
     public Stage stage;
-
-
-
 
     @FXML
     public void initialize() {
@@ -58,12 +57,10 @@ public class LibraryAddBookController {
         validation.registerValidator(enterTitleName, Validator.createEmptyValidator("The title name must not be empty."));
         validation.registerValidator(enterPublicationYear, Validator.createEmptyValidator("The publication year  must not be empty."));
 
-
         applyAddButton.disableProperty().bind(validation.invalidProperty());
 
         logger.info("LibraryAddBookController initialized");
     }
-
 
     public void handleoOnAddBookButton(ActionEvent actionEvent) throws IOError{
         String author = String.valueOf(enterAuthor.getText());
@@ -80,8 +77,6 @@ public class LibraryAddBookController {
         libraryEditView.setPublicationYear(publicationYear);
 
             libraryService.addBook(libraryEditView);
-
-
     }
 }
 

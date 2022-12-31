@@ -19,8 +19,6 @@ import java.util.List;
 
 public class LibraryInjectionController {
 
-    private static final Logger logger = LoggerFactory.getLogger(LibraryInjectionController.class);
-
     @FXML
     public TextField enterSearchBar;
     @FXML
@@ -35,8 +33,10 @@ public class LibraryInjectionController {
     @FXML
     public TableColumn <LibraryInjectionView, String>usernameColumn;
 
+    private static final Logger logger = LoggerFactory.getLogger(LibraryInjectionController.class);
 
     private LibraryService libraryService;
+
     private LibraryRepository libraryRepository;
 
     public Stage stage;
@@ -53,10 +53,6 @@ public class LibraryInjectionController {
         nameColumn.setCellValueFactory(new PropertyValueFactory<LibraryInjectionView, String>("nameColumn"));
         usernameColumn.setCellValueFactory(new PropertyValueFactory<LibraryInjectionView, String>("usernameColumn"));
 
-
-
-        //ObservableList<LibraryInjectionView> observablePersonList = initializePersonsData();
-        //injectionViewTable.setItems(observablePersonList);
         logger.info("LibraryInjectionController initialized");
 
     }
@@ -71,6 +67,5 @@ public class LibraryInjectionController {
 
             ObservableList<LibraryInjectionView> observableLibraryList = initializeLibraryData();
             injectionViewTable.setItems(observableLibraryList);
-
     }
 }

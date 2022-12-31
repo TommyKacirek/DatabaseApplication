@@ -1,11 +1,8 @@
 package org.but.feec.library.services;
 
-
 import org.but.feec.library.api.*;
 import org.but.feec.library.data.LibraryRepository;
-
 import java.util.List;
-
 
 public class LibraryService {
 
@@ -27,8 +24,6 @@ public class LibraryService {
         libraryRepository.addBook(libraryEditView);
     }
 
-
-
     public void libraryUpdate(LibraryUpdateView libraryUpdateView) {
         libraryRepository.libraryUpdate(libraryUpdateView);
     }
@@ -40,7 +35,6 @@ public class LibraryService {
     public List<LibraryInjectionView> getInjectionView(String text) {
         return libraryRepository.getInjectionView(text);
     }
-
 }
 
 

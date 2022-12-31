@@ -17,14 +17,11 @@ import org.but.feec.library.exceptions.ExceptionHandler;
 import org.but.feec.library.services.LibraryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.io.IOException;
 import java.util.List;
 
 public class LibraryPageController {
 
-
-    private static final Logger logger = LoggerFactory.getLogger(LibraryPageController.class);
     @FXML
     private TableView <LibraryBasicView> libraryTabelView;
 
@@ -43,10 +40,6 @@ public class LibraryPageController {
     @FXML
     private TableColumn <LibraryBasicView, String> availabilityAbsent;
 
-
-
-
-
     @FXML
     private TextField searchBar;
 
@@ -64,6 +57,7 @@ public class LibraryPageController {
     @FXML
     public Button trySQLInjectionButton;
 
+    private static final Logger logger = LoggerFactory.getLogger(LibraryPageController.class);
 
     private LibraryService libraryService;
 
@@ -87,15 +81,12 @@ public class LibraryPageController {
         initializeTableViewSelection();
 
         logger.info("LibraryPageController initialized");
-
-
     }
 
     private ObservableList<LibraryBasicView> initializeLibraryData() {
         List<LibraryBasicView> persons = libraryService.getPersonsBasicView();
         return FXCollections.observableArrayList(persons);
     }
-
 
     @FXML
     private void handleOnBookAction() {
@@ -171,14 +162,11 @@ public class LibraryPageController {
             }
         });
 
-
-
         delete.setOnAction((ActionEvent event) -> {
             LibraryBasicView bookView = libraryTabelView.getSelectionModel().getSelectedItem();
             long titleId = bookView.getTitleId();
             libraryRepository.removeBook(titleId);
         });
-
 
         ContextMenu menu = new ContextMenu();
         menu.getItems().add(update);
@@ -229,8 +217,6 @@ public class LibraryPageController {
         } catch (IOException ex) {
             ExceptionHandler.handleException(ex);
         }
-
-
     }
 }
 

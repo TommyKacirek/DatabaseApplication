@@ -12,12 +12,9 @@ import org.but.feec.library.data.LibraryRepository;
 import org.but.feec.library.services.LibraryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.util.List;
 
 public class LibraryFilterController {
-
-    private static final Logger logger = LoggerFactory.getLogger(LibraryFilterController.class);
 
     @FXML
     public TableView tableViewFilter;
@@ -37,7 +34,10 @@ public class LibraryFilterController {
     @FXML
     public TableColumn availabilityAbsentColumn;
 
+    private static final Logger logger = LoggerFactory.getLogger(LibraryFilterController.class);
+
     private LibraryService libraryService;
+
     private LibraryRepository libraryRepository;
 
     public Stage stage;
@@ -55,7 +55,6 @@ public class LibraryFilterController {
         publicationYearColumn.setCellValueFactory(new PropertyValueFactory<LibraryFilterController, Long>("publicationYear"));
         availabilityPresentColumn.setCellValueFactory(new PropertyValueFactory<LibraryFilterController, String>("availabilityPresent"));
         availabilityAbsentColumn.setCellValueFactory(new PropertyValueFactory<LibraryFilterController, String>("availabilityAbsent"));
-
 
     ObservableList<LibraryFilterView> observableLibraryList = initializeLibraryData();
         tableViewFilter.setItems(observableLibraryList);

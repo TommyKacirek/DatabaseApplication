@@ -4,21 +4,16 @@ import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.time.Duration;
 import java.time.Instant;
-
 import org.but.feec.library.api.LibraryAuthView;
 import org.but.feec.library.data.LibraryRepository;
 import org.but.feec.library.exceptions.ResourceNotFoundException;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.SecretKeyFactory;
 import java.math.BigInteger;
-
-
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 
 public class AuthService {
-
-    private LibraryRepository libraryRepository;
 
     public AuthService(LibraryRepository personRepository) {
         this.libraryRepository = personRepository;
@@ -28,15 +23,13 @@ public class AuthService {
         return libraryRepository.findPersonByEmail(email);
     }
 
+    private LibraryRepository libraryRepository;
 
     public boolean authenticate(String username, String password) throws NoSuchAlgorithmException, InvalidKeySpecException {
 
         if (username == null || username.isEmpty() || password == null || password.isEmpty()) {
             return false;
         }
-        //String hash = argon2.hash(10,1024,10,password);
-        //System.out.println(hash);
-
 
         LibraryAuthView libraryAuthView = findPersonByEmail(username);
         if (libraryAuthView == null) {
@@ -57,6 +50,7 @@ public class AuthService {
         }
         return true;
     }
+
     private static String toHex(byte[] array) {
         BigInteger bi = new BigInteger(1, array);
         String hex = bi.toString(16);
@@ -67,11 +61,7 @@ public class AuthService {
             return hex;
     }
     public static final String PBKDF2_ALGORITHM = "PBKDF2WithHmacSHA1";
-
-
-
-
-    }
+}
 
 
 

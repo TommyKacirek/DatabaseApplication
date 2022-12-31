@@ -13,11 +13,10 @@ import org.but.feec.library.services.LibraryService;
 import org.controlsfx.validation.ValidationSupport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.util.List;
 
 public class LibraryDetailedView {
-    private static final Logger logger = LoggerFactory.getLogger(LibraryPageController.class);
+
     @FXML
     public TableView detailedTableView;
 
@@ -39,13 +38,15 @@ public class LibraryDetailedView {
     @FXML
     public TableColumn languageColumn;
 
+    private static final Logger logger = LoggerFactory.getLogger(LibraryPageController.class);
+
     private LibraryService libraryService;
+
     private LibraryRepository libraryRepository;
+
     private ValidationSupport validation;
 
     public Stage stage;
-
-
 
     @FXML
     public void initialize() {
@@ -66,13 +67,10 @@ public class LibraryDetailedView {
 
         logger.info("LibraryDetailedViewController initialized");
 
-
     }
 
     private ObservableList<LibraryDetailView> initializeLibraryData() {
         List<LibraryDetailView> detailView = libraryService.getPersonsDetailView();
         return FXCollections.observableArrayList(detailView);
     }
-
-
 }

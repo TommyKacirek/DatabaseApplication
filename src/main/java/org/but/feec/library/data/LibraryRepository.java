@@ -41,8 +41,6 @@ public class LibraryRepository {
                              " FROM bds.title "
                               );
 
-
-
              ResultSet resultSet = preparedStatement.executeQuery();) {
             List<LibraryBasicView> libraryBasicViews = new ArrayList<>();
             while (resultSet.next()) {
@@ -54,16 +52,12 @@ public class LibraryRepository {
         }
     }
 
-
-
     private LibraryAuthView mapToLibraryAuth(ResultSet rs) throws SQLException {
         LibraryAuthView person = new LibraryAuthView();
         person.setEmail(rs.getString("login_email"));
         person.setPassword(rs.getString("passwd_hash"));
         return person;
     }
-
-
 
     private LibraryBasicView mapToLibraryBasicView(ResultSet rs) throws SQLException {
         LibraryBasicView libraryBasicView = new LibraryBasicView();
@@ -74,8 +68,6 @@ public class LibraryRepository {
         libraryBasicView.setAvailabilityAbsent(rs.getLong("availability_absent"));
         return libraryBasicView;
     }
-
-
 
     public void addBook(LibraryEditView libraryEditView) {
         String insertAuthorSQL = "INSERT INTO bds.author (given_name,family_name,born) VALUES (?,?,?); " +
@@ -100,7 +92,6 @@ public class LibraryRepository {
             preparedStatement.setString(8, libraryEditView.getTitleName());
             System.out.println(preparedStatement);
             connection.setAutoCommit(false);
-
 
             try {
                 int affectedRows = preparedStatement.executeUpdate();
@@ -130,13 +121,7 @@ public class LibraryRepository {
         } catch (SQLException e) {
             throw new DataAccessException("Creating book failed operation on the database failed." + e);
         }
-
-
-
-
     }
-
-
 
     public List<LibraryDetailView> getLibraryDetailView() {
         try (Connection connection = DataSourceConfig.getConnection();
@@ -151,8 +136,6 @@ public class LibraryRepository {
                              " LEFT JOIN bds.borrow_type ON copy.copy_id = borrow_type.borrow_type_id " +
                              " LEFT JOIN bds.lang_name ON copy.copy_id = lang_name.lang_id; "
              );
-
-
 
              ResultSet resultSet = preparedStatement.executeQuery();) {
             List<LibraryDetailView> libraryDetailViews = new ArrayList<>();
@@ -195,8 +178,6 @@ public class LibraryRepository {
         } catch (SQLException e) {
             throw new DataAccessException("Creating person failed operation on the database failed." + e );
         }
-
-
     }
 
     public List<LibraryFilterView> getBookFilterView(String text) {
@@ -252,7 +233,6 @@ public class LibraryRepository {
         try (Connection connection = DataSourceConfig.getConnection();
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(InjectionSQL))
-
          {
             List<LibraryInjectionView> libraryInjectionView = new ArrayList<>();
             while (resultSet.next()) {

@@ -12,36 +12,36 @@ public class LibraryEditView {
         return author;
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
-    }
-
     public String getGivenName() {
         return givenName;
-    }
-
-    public void setGivenName(String givenName) {
-        this.givenName = givenName;
     }
 
     public Long getBorn() {
         return born;
     }
 
-    public void setBorn(Long born) {
-        this.born = born;
-    }
-
     public String getTitleName() {
         return titleName;
     }
 
-    public void setTitleName(String titleName) {
-        this.titleName = titleName;
-    }
-
     public Long getPublicationYear() {
         return publicationYear;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public void setGivenName(String givenName) {
+        this.givenName = givenName;
+    }
+
+    public void setBorn(Long born) {
+        this.born = born;
+    }
+
+    public void setTitleName(String titleName) {
+        this.titleName = titleName;
     }
 
     public void setPublicationYear(Long publicationYear) {
