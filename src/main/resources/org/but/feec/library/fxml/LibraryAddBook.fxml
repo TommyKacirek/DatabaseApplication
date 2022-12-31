@@ -14,12 +14,12 @@
             <TextField fx:id="enterBorn" layoutX="131.0" layoutY="275.0" promptText="Enter born" />
             <TextField fx:id="enterTitleName" layoutX="131.0" layoutY="353.0" promptText="Enter title name" />
             <TextField fx:id="enterPublicationYear" layoutX="131.0" layoutY="433.0" promptText="Enter publication year" />
-            <Label alignment="CENTER" layoutX="61.0" layoutY="140.0" prefHeight="17.0" prefWidth="48.0" text="author" textFill="#72cf9f">
+            <Label alignment="CENTER" layoutX="27.0" layoutY="140.0" prefHeight="21.0" prefWidth="82.0" text="first name " textFill="#72cf9f">
                <font>
                   <Font name="Comic Sans MS" size="14.0" />
                </font>
             </Label>
-            <Label alignment="CENTER" layoutX="36.0" layoutY="207.0" prefHeight="20.0" prefWidth="90.0" text="given name" textFill="#72cf9f">
+            <Label alignment="CENTER" layoutX="36.0" layoutY="207.0" prefHeight="20.0" prefWidth="90.0" text="second name" textFill="#72cf9f">
                <font>
                   <Font size="14.0" />
                </font>
@@ -44,7 +44,7 @@
                   <Image url="@../images/Duck.png" />
                </image>
             </ImageView>
-            <Label layoutX="47.0" layoutY="42.0" prefHeight="35.0" prefWidth="365.0" text="Samurai Duck Library Edit" textFill="#72cf9f">
+            <Label layoutX="47.0" layoutY="42.0" prefHeight="35.0" prefWidth="365.0" text="Samurai Duck Library Update" textFill="#72cf9f">
                <font>
                   <Font name="Comic Sans MS" size="24.0" />
                </font>
