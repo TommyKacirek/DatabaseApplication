@@ -1,4 +1,4 @@
-# BDS-PROJECT-ASSIGNMENT-3
+# Database project with GUI
 DB app with GUI
 ## To build and run
 Entre these commands in project root directory to build.
